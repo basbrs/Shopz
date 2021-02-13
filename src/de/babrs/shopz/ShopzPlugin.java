@@ -1,6 +1,9 @@
 package de.babrs.shopz;
 
 import de.babrs.shopz.commands.CommandShopz;
+import de.babrs.shopz.inventories.InventoriesSingleton;
+import de.babrs.shopz.inventories.SetupInventory;
+import de.babrs.shopz.inventories.ShoppingInventory;
 import de.babrs.shopz.listerners.*;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;

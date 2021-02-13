@@ -1,7 +1,7 @@
 package de.babrs.shopz.commands;
 
 import de.babrs.shopz.ShopzPlugin;
-import de.babrs.shopz.ShoppingUtil;
+import de.babrs.shopz.util.ShoppingUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

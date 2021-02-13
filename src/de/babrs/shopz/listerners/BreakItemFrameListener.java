@@ -1,7 +1,7 @@
 package de.babrs.shopz.listerners;
 
 import de.babrs.shopz.ShopzPlugin;
-import de.babrs.shopz.ShoppingUtil;
+import de.babrs.shopz.util.ShoppingUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;

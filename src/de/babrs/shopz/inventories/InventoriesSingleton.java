@@ -1,4 +1,4 @@
-package de.babrs.shopz;
+package de.babrs.shopz.inventories;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;

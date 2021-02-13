@@ -1,7 +1,7 @@
 package de.babrs.shopz.listerners;
 
-import de.babrs.shopz.SetupInventory;
-import de.babrs.shopz.ShoppingUtil;
+import de.babrs.shopz.inventories.SetupInventory;
+import de.babrs.shopz.util.ShoppingUtil;
 import de.babrs.shopz.ShopzPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

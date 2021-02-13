@@ -1,6 +1,10 @@
 package de.babrs.shopz.listerners;
 
 import de.babrs.shopz.*;
+import de.babrs.shopz.inventories.InventoriesSingleton;
+import de.babrs.shopz.inventories.SetupInventory;
+import de.babrs.shopz.inventories.ShoppingInventory;
+import de.babrs.shopz.util.ShoppingUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

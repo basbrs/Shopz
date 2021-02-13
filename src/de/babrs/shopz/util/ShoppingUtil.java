@@ -1,5 +1,8 @@
-package de.babrs.shopz;
+package de.babrs.shopz.util;
 
+import de.babrs.shopz.ShopzPlugin;
+import de.babrs.shopz.inventories.InventoriesSingleton;
+import de.babrs.shopz.inventories.ShoppingInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

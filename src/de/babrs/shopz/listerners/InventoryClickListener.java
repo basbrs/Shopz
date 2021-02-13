@@ -1,8 +1,8 @@
 package de.babrs.shopz.listerners;
 
-import de.babrs.shopz.InventoriesSingleton;
-import de.babrs.shopz.SetupInventory;
-import de.babrs.shopz.ShoppingInventory;
+import de.babrs.shopz.inventories.InventoriesSingleton;
+import de.babrs.shopz.inventories.SetupInventory;
+import de.babrs.shopz.inventories.ShoppingInventory;
 import de.babrs.shopz.ShopzPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
