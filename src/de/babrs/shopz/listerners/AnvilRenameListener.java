@@ -24,7 +24,8 @@ public class AnvilRenameListener implements Listener{
                 && event.getCurrentItem().getType() != Material.AIR
                 && event.getWhoClicked().getItemOnCursor().getType() == Material.AIR
                 && event.getCurrentItem().getType() == Material.ITEM_FRAME
-                && event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase((String) ShopzPlugin.getPluginConfig().get("frame_name"))){
+                && event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase((String) ShopzPlugin.getPluginConfig().get("frame_name"))
+                && event.getWhoClicked().hasPermission("shopz.create")){
             FileConfiguration config = ShopzPlugin.getPluginConfig();
             FileConfiguration localization = ShopzPlugin.getLocalization();
             Economy econ = ShopzPlugin.getEconomy();

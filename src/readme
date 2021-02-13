@@ -1,8 +1,8 @@
 permissions:
-    shopz.admin
-    shopz.clear
-    shopz.setcost
-    shopz.setstep
-    shopz.trade
-    shopz.create
-    shopz.reload
+    shopz.trade     -   Erlaubnis an Shops ein- oder verkaufen zu dürfen
+    shopz.create    -   Erlaubnis Shops (keine Adminshops) mit ItemFrames erstellen zu dürfen und ItemFrames umnennen zu können
+    shopz.admin     -   Erlaubnis mit /shopz admin ItemFrames für Adminshops zu generieren und diese zu erstellen
+    shopz.clear     -   Erlaubnis mit /shopz clear oder durch Linksclick Shops zu löschen
+    shopz.setcost   -   Erlaubnis mit /shopz setcost [int] die Kosten für das Umbenennen eines ItemFrames zu setzen
+    shopz.setstep   -   Erlaubnis mit /shopz setstep [int] die Preisgranularität für Shops zu setzen
+    shopz.reload    -   Erlaubnix mit /shopz reload die Config- und Localization von der Platte neu zu laden
