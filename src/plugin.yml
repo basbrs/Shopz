@@ -1,0 +1,11 @@
+name: Shopz
+version: 0.1
+author: babrs
+main: de.babrs.shopz.ShopzPlugin
+description: Plugin handling the trading in shops, by babrs.
+api-version: 1.15
+depend: [ Vault ]
+commands:
+  shopz:
+    description: Returns information about the plugin
+    usage: /<command> [clear, setcost, setstep, admin, reload]

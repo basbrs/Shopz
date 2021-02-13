@@ -1,0 +1,14 @@
+# Wird im Chat vor Nachrichten des Plugins angezeigt
+chat_prefix: §6§l[Shopz] §7
+
+# Name für ItemFrames
+frame_name: $shop
+
+# Kosten (in Serverwährung) für das Erstellen eines Shop-Tokens
+frame_cost_money: 5
+
+# Schrittgröße für Preiseinstellung
+price_step_size: 10
+
+# Währungskürzel
+currency: $

@@ -1,0 +1,133 @@
+# Titel des Shops (Inventar und leere Felder)
+#   mögliche Tags: @user
+shop_title: Shop von @user
+
+# Titel eines Adminshops
+admin_shop: Adminshop
+
+# Name für ItemFrame zum Erstellen eines Shops
+frame_name_item: Shop-Token
+
+# Titel eines Shops bei Bearbeitung
+shop_settings: Bearbeitung des Shops
+
+# Titel eins Adminshops bei Bearbeitung
+admin_shop_settings: Bearbeitung des Adminshops
+
+# Warnung beim Erstellen des Adminshops
+admin_shop_warning: "@price aus Sicht des Servers!"
+
+# Geld, das der Spieler beim Kauf eines Gegenstandes verliert
+buy_price: Ankaufspreis
+
+# Geld, das der Spieler beim Verkauf eines Gegenstandes hinzubekommt
+sell_price: Verkaufspreis
+
+# Erhöhe (beispielsweise "An- oder Verkaufspreis")
+#   mögliche Tags: @price
+increase: Erhöhe @price um
+
+# Verringere (beispielsweise "An- oder Verkaufspreis")
+#   mögliche Tags: @price
+decrease: Verringere @price um
+
+# Aktueller (beispielsweise "An- oder Verkaufspreis")
+current: Aktueller
+
+# Text der auf dem Button für den Verkauf angezeigt werden soll
+#   mögliche Tags: @amount, @good, @sell_price, @currency
+sell_text: Verkaufe @amount @good für @sell_price@currency
+
+# Text der auf dem Button für den Kauf angezeigt werden soll
+#   mögliche Tags: @amount, @good, @buy_price, @currency
+buy_text: Kaufe @amount @good für @buy_price@currency
+
+# Text der dem Käufer bei einem erfolgreichen Kauf angezeigt wird
+#   mögliche Tags: @amount, @good, @buy_price, @currency, @owner
+buy_success: Du hast @amount @good für @buy_price@currency von @owner gekauft.
+
+# Text der dem Verkäufer bei einem erfolgreichen Verkauf angezeigt wird
+#   mögliche Tags: @amount, @good, @buy_price, @currency, @buyer
+sell_success: Du hast @amount @good für @buy_price@currency an @buyer verkauft.
+
+# Text, der dem Nutzer beim Platzieren des Shop-ItemFrames angezeigt wird.
+#   mögliche Tags: @pos
+placed_shop_frame: Dein Shop wurde bei @pos registriert.
+
+# Text, der dem Nutzer beim Platzieren des Admin Shop-ItemFrames angezeigt wird.
+#   mögliche Tags: @pos
+placed_admin_shop: Bei @pos wurde ein Adminshop registriert.
+
+# Text, der dem Nutzer beim Platzieren des Shop-ItemFrames angezeigt wird, wenn für den jeweiligen Container bereits ein Shop vorhanden ist.
+#   mögliche Tags: @pos, @amount
+added_shop_frame: Dein Shop bei @pos hat jetzt @amount ItemFrames.
+
+# Text der dem Nutzer beim Entfernen eines Shop-ItemFrames gesendet wird
+#   mögliche Tags: @pos, @left
+remove_one_frame: Ein ItemFrame des Shops bei @pos wurde zerstört, @left übrig.
+
+# Text der dem Nutzer beim Entfernen des letzten Shop-ItemFrames eines Blockes gesendet wird
+#   mögliche Tags: @pos
+remove_last_frame: Dein Shop bei @pos wurde zerstört.
+
+# Text der Nutzer im leeren Verkaufsslot angezeigt wird
+empty_settings_slot: Hier zu handelnden Gegenstand ablegen
+
+# Text der nach dem erfolgreichen Bereinigen eines Blockes mit dem clear-Befehl ausgegeben wird
+#   mögliche Tags: @amount, @pos
+cleared_frames: Es wurden @amount ItemFrames für den Shop bei @pos gelöscht.
+
+# Text der beim clear- oder create-Befehl ausgegeben wird, sofern kein Block anvisiert wird
+no_block_sight: Kein Block innerhalb der nächsten 5 Blöcke anvisiert.
+
+# Text der beim clear-Befehl ausgegeben wird, sofern kein Shop anvisiert wird
+no_registered_shops: Der anvisierte Block beinhaltet keine Shops.
+
+# Text, der Nutzer ausgegeben wird, wenn an einem Shop gekauft wird, der nicht über genügend Güter verfügt
+#   mögliche Tags: @pos, @good
+shop_insufficient_stock: Der Shop bei @pos hat kein @good mehr auf Lager.
+
+# Text, der Nutzer ausgegeben wird, wenn er an einem Shop Items verkaufen will, die er nicht im Inventar hat
+#   mögliche Tags: @good
+player_insufficient_stock: Du hast nicht genügend @good, um hier zu verkaufen.
+
+# Wird dem Spieler angezeigt, wenn er ein Item kaufen will, aber keinen Platz hat
+no_space_inv: Dieser Gegenstand passt nicht mehr in dein Inventar.
+
+# Wird dem Shopbesitzer und potenziellem Käufer angezeigt, wenn ein Verkauf fehlschlägt, weil der Container des Shops voll ist.
+#   mögliche Tags: @pos
+no_space_shop: Der Shop bei @pos ist voll und kann keine Items mehr ankaufen.
+
+# Text der dem Nutzer angezeigt wird, wenn er nicht über genug Geld verfügt (Frames erstellen und einkaufen)
+not_enough_money: Dafür hast du nicht genügend Geld.
+
+# Wird dem Nutzer angezeigt, wenn er am Amboss Frames umbenennen will ohne über genug Geld zu verfügen (siehe config)
+#   mögliche Tags: @amount, @required, @currency
+not_enough_money_to_create_shop: Du hast nicht genügend Geld, um @amount Shops zu erstellen, dafür benötigst du insgesamt @required@currency.
+
+# Text der dem Nutzer angezeigt wird, wenn er an jemanden verkaufen will, der zu wenig Geld hat
+#   mögliche Tags: @owner
+owner_not_enough_money: Dafür hat @owner nicht genug Geld.
+
+# Text der Nutzer bei nicht näher definierten Fehlern angezeigt wird.
+error: Es ist ein Fehler aufgetreten, möglicherweise wurde dein ItemFrame zerstört?
+
+# Fehlertext der dem Nutzer ausgegeben wird wenn der Ankaufspreis größer oder gleich dem Verkaufspreis ist
+#   mögliche Tags: @sell_price, @buy_price
+error_buy_ge_sell: Der @sell_price muss größer als der @buy_price sein!
+
+# Fehlertext der dem Nutzer ausgegeben wird wenn der Ankaufspreis beim Adminshop größer dem Verkaufspreis ist
+error_admin_sell_gr_buy: Der Adminshop darf nicht teurer ankaufen, als er verkauft!
+
+# Fehlertext der dem Nutzer ausgegeben wird wenn er keinen Gegenstand zum Handel angegeben hat
+error_empty_good: Es muss ein Gegenstand für den Handel (mittlerer Slot) angegeben werden!
+
+# Fehlertext der dem Nutzer ausgegeben wird wenn er den Shop eines anderen Spielers zerstören/erweitern will
+#   mögliche Tags: @owner
+error_not_your_shop: Dieser Shop gehört nicht dir, sondern @owner.
+
+# Fehlertext der dem Nutzer ausgegeben wird wenn er einen Adminshop zerstören/erweitern will
+error_not_your_shop_admin: Dieser Shop gehört nicht dir, sondern ist ein Adminshop.
+
+# Fehlermeldung (rot und ohne Prefix), wenn der Spieler (oder Sender) ohne Permission agiert.
+no_permission: Dir fehlen die nötigen Berechtigungen, um das durchzuführen.
