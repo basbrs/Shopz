@@ -12,6 +12,7 @@ import org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils;
 import org.bukkit.craftbukkit.libs.org.apache.commons.io.IOUtils;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -84,6 +85,10 @@ public class ShopzPlugin extends JavaPlugin{
 
     public static FileConfiguration getLocalization(){
         return localization;
+    }
+
+    public static ShopzPlugin getInstance(){
+        return instance;
     }
 
     public static Economy getEconomy(){
