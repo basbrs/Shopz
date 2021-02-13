@@ -2,8 +2,8 @@ package de.babrs.shopz.listerners;
 
 import de.babrs.shopz.InventoriesSingleton;
 import de.babrs.shopz.SetupInventory;
+import de.babrs.shopz.ShoppingInventory;
 import de.babrs.shopz.ShopzPlugin;
-import de.babrs.shopz.handlers.ShopInteractionHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,13 +19,20 @@ public class InventoryClickListener implements Listener{
 
         if(inv.getType() == InventoryType.HOPPER){
             if(InventoriesSingleton.getShopWithInventory(inv) != null
-                    && event.getRawSlot() < 5 && event.getRawSlot() >= 0)
-                if(event.getClick() == ClickType.LEFT)
-                    ShopInteractionHandler.handle(event);
-                else if(event.getClick() == ClickType.SHIFT_LEFT)
-                    for(int i = 0; i < 5; i++)
-                        ShopInteractionHandler.handle(event);
-                else event.setCancelled(true);
+                    && event.getRawSlot() < 5 && event.getRawSlot() >= 0){
+                event.setCancelled(true);
+
+                int transactions = 0;
+                if(event.getClick() == ClickType.LEFT) transactions = 1;
+                else if(event.getClick() == ClickType.SHIFT_LEFT) transactions = 5;
+
+                ShoppingInventory shop = InventoriesSingleton.getShopWithInventory(event.getInventory());
+                for(int i = 0; i < transactions; i++)
+                    switch(event.getClickedInventory().getItem(event.getRawSlot()).getType()){
+                        case STRUCTURE_VOID    -> shop.trade((Player) event.getWhoClicked(), true, 1);
+                        case BARRIER           -> shop.trade((Player) event.getWhoClicked(), false, 1);
+                    }
+            }
             else{
                 SetupInventory setup = InventoriesSingleton.getSetupFrom((Player) event.getWhoClicked());
                 if(setup != null && event.getRawSlot() < 5 && event.getRawSlot() >= 0){

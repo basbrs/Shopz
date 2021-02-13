@@ -1,10 +1,13 @@
 package de.babrs.shopz;
 
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.BlockInventoryHolder;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -22,6 +25,9 @@ public class ShoppingInventory{
     private final int amount;
     private final Material good;
     private final boolean isAdminShop;
+    private final Economy econ;
+    private final FileConfiguration localization;
+    private final FileConfiguration shops;
 
     public ShoppingInventory(Inventory inventory, BlockInventoryHolder block, Material good, int amount, int buyPrice, int sellPrice){
         this.shopInventory = inventory;
@@ -31,6 +37,81 @@ public class ShoppingInventory{
         this.buyPrice = buyPrice;
         this.amount = amount;
         this.isAdminShop = ShopzPlugin.getShops().getBoolean(ShoppingUtil.blockToPath(block.getBlock()) + ".admin");
+        this.econ = ShopzPlugin.getEconomy();
+        this.localization = ShopzPlugin.getLocalization();
+        this.shops = ShopzPlugin.getShops();
+    }
+
+    public void trade(Player p, boolean buy, int transactionCount){
+        OfflinePlayer owner = null;
+        String prefix = ShopzPlugin.getPrefix();
+
+        if(!isAdminShop)
+            owner = Bukkit.getOfflinePlayer(UUID.fromString(shops.getString(ShoppingUtil.blockToPath(getBlock()) + ".owner")));
+
+        if(isAdminShop || econ.getBalance(p) >= buyPrice){
+            boolean hasInvSpace = buy
+                    ? ShoppingUtil.hasInventorySpaceFor(p.getInventory(), getStack(amount))
+                    : isAdminShop || ShoppingUtil.hasInventorySpaceFor(getChestInventory(), getStack(amount));
+            if(hasInvSpace){
+                if(buy ? transferBuy() : transferSell()){
+                    if(buy){
+                        econ.withdrawPlayer(p, buyPrice);
+                        if(!isAdminShop)
+                            econ.depositPlayer(owner, buyPrice);
+                    }else{
+                        if(!isAdminShop)
+                            econ.withdrawPlayer(owner, sellPrice);
+                        econ.depositPlayer(p, sellPrice);
+                    }
+
+                    p.sendMessage(prefix + generateText(buy, true, isAdminShop ? localization.getString("admin_shop") : owner.getName()));
+
+                    if(!isAdminShop && owner.isOnline())
+                        ((Player) owner).sendMessage(prefix + generateText(!buy, false, p.getName()));
+                }else{
+                    String message = (buy
+                    ? prefix + localization.getString("shop_insufficient_stock")
+                            .replace("@pos", "(" + getBlock().getX() + ", " + getBlock().getY() + ", " + getBlock().getZ() + ")")
+                    : prefix + localization.getString("player_insufficient_stock"))
+                            .replace("@good", ShoppingUtil.generateMaterialName(good));
+
+                    p.sendMessage(message);
+                    if(buy && !isAdminShop && owner.isOnline())
+                        ((Player) owner).sendMessage(message);
+                }
+            }else{
+                String message = buy
+                        ? prefix + localization.getString("no_space_inv")
+                        : prefix + (localization.getString("no_space_shop"))
+                            .replace("@pos", "(" + getBlock().getX() + ", " + getBlock().getY() + ", " + getBlock().getZ() + ")");
+                p.sendMessage(message);
+                if(!buy && owner.isOnline())
+                    ((Player) owner).sendMessage(message);
+            }
+        }else{
+            String message = buy
+                    ? prefix + localization.getString("not_enough_money")
+                    : prefix + (localization.getString("owner_not_enough_money")).replace("@owner", owner.getName());
+            p.sendMessage(message);
+        }
+    }
+
+    private String generateText(boolean buy, boolean forCustomer, String otherName){
+        String currency = ShopzPlugin.getPluginConfig().getString("currency");
+        String buyText = localization.getString("buy_success");
+        String sellText = localization.getString("sell_success");
+
+        if(buy) return buyText.replace("@amount", Integer.toString(amount))
+                    .replace("@good", ShoppingUtil.generateMaterialName(good))
+                    .replace("@buy_price", forCustomer ? Integer.toString(buyPrice) : Integer.toString(sellPrice))
+                    .replace("@currency", currency)
+                    .replace("@owner", otherName);
+        else return sellText.replace("@amount", Integer.toString(amount))
+                .replace("@good", ShoppingUtil.generateMaterialName(good))
+                .replace("@buy_price", forCustomer ? Integer.toString(sellPrice) : Integer.toString(buyPrice))
+                .replace("@currency", currency)
+                .replace("@buyer", otherName);
     }
 
     public Inventory getShopInventory(){
@@ -43,22 +124,6 @@ public class ShoppingInventory{
 
     public Block getBlock(){
         return block.getBlock();
-    }
-
-    public int getBuyPrice(){
-        return buyPrice;
-    }
-
-    public int getSellPrice(){
-        return sellPrice;
-    }
-
-    public int getAmount(){
-        return amount;
-    }
-
-    public Material getGood(){
-        return good;
     }
 
     public List<ItemFrame> getFrames(){
