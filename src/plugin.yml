@@ -8,4 +8,4 @@ depend: [ Vault ]
 commands:
   shopz:
     description: Returns information about the plugin
-    usage: /<command> [clear, setcost, setstep, admin, reload]
+    usage: /<command> [admin, clear, reload, setcost, setstep]

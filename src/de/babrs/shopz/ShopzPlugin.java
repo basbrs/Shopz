@@ -21,7 +21,7 @@ import java.io.*;
 import java.util.logging.Logger;
 
 public class ShopzPlugin extends JavaPlugin{
-    private final Logger logger = super.getLogger();
+    private static final Logger logger = Logger.getLogger(ShopzPlugin.class.getName());
     private static Economy econ = null;
     private static PluginDescriptionFile description;
     private static FileConfiguration config;
@@ -29,12 +29,11 @@ public class ShopzPlugin extends JavaPlugin{
     private static FileConfiguration localization;
     private static File shopsFile;
     private static String prefix;
+    private static ShopzPlugin instance;
 
     @Override
     public void onEnable(){
-        //TODO: SetupInteractionHandler schön machen
         //TODO: Permissions (auch für Shoperstellung mit Frame)
-        //TODO: Admin-Shops
         //TODO: Commands
         //TODO: Doku?
         //TODO: Permission: Shops anderer löschen
@@ -48,6 +47,8 @@ public class ShopzPlugin extends JavaPlugin{
         loadLocalization();
         loadShops();
         registerEvents();
+
+        instance = this;
     }
 
     @Override
@@ -126,6 +127,11 @@ public class ShopzPlugin extends JavaPlugin{
         }catch(IOException e){
             e.printStackTrace();
         }
+    }
+
+    public static void reloadConfigurations(){
+        instance.loadLocalization();
+        instance.loadConfig();
     }
 
     private void loadLocalization(){

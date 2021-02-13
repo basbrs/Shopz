@@ -83,6 +83,9 @@ no_block_sight: Kein Block innerhalb der nächsten 5 Blöcke anvisiert.
 # Text der beim clear-Befehl ausgegeben wird, sofern kein Shop anvisiert wird
 no_registered_shops: Der anvisierte Block beinhaltet keine Shops.
 
+# Erfolgsnachricht bei /shopz reload
+successful_reload: Konfigurationsdatei und Sprachpaket neu geladen.
+
 # Text, der Nutzer ausgegeben wird, wenn an einem Shop gekauft wird, der nicht über genügend Güter verfügt
 #   mögliche Tags: @pos, @good
 shop_insufficient_stock: Der Shop bei @pos hat kein @good mehr auf Lager.

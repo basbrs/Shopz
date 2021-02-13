@@ -23,6 +23,8 @@ public class CommandShopz{
                 return CommandClear.run(sender);
             }else if(args[0].equalsIgnoreCase("admin")){
                 return CommandAdmin.run(sender);
+            }else if(args[0].equalsIgnoreCase("reload")){
+                return CommandReload.run(sender);
             }
         }else if(args.length == 2){
             if(args[0].equalsIgnoreCase("setCost")){
