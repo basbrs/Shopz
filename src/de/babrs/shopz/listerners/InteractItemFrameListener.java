@@ -48,9 +48,7 @@ public class InteractItemFrameListener implements Listener{
                         event.setCancelled(true);
                         if(p.getUniqueId().toString().equals(ownerUUID)){
                             ShoppingUtil.closeAllVisitorInventories(attachedTo);
-
                             new SetupInventory(p, frame, false).openSetupDialogue();
-
                             for(String uuid : frames)
                                 ShoppingUtil.setUnderConstruction((ItemFrame) Objects.requireNonNull(Bukkit.getEntity(UUID.fromString(uuid))));
                         }else{
