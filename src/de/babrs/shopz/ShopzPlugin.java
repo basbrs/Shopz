@@ -36,8 +36,6 @@ public class ShopzPlugin extends JavaPlugin{
         //TODO: Permissions (auch für Shoperstellung mit Frame)
         //TODO: Commands
         //TODO: Doku?
-        //TODO: Permission: Shops anderer löschen
-        //TODO: OnItemFrameBreaking abfangen, ob bspw. ein Creeper den Frame zerstört hat (RemoveCause)
         //TODO: /help command
         ShopzPlugin.description = super.getDescription();
 

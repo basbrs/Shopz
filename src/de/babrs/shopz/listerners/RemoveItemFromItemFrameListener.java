@@ -3,6 +3,7 @@ package de.babrs.shopz.listerners;
 import de.babrs.shopz.ShopzPlugin;
 import de.babrs.shopz.ShoppingUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -11,9 +12,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class RemoveItemFromItemFrameListener implements Listener{
+    HashMap<Player, String> removeRequests = new HashMap<>();
 
     @EventHandler(priority = EventPriority.LOW)
     public void onItemFrameItemRemove(EntityDamageByEntityEvent event){
@@ -28,13 +31,36 @@ public class RemoveItemFromItemFrameListener implements Listener{
                     source = (Player)((Projectile) damager).getShooter();
                 }
                 if(source != null){
-                    String ownerUUID = (String) ShopzPlugin.getShops().get(path + ".owner");
-                    if(ownerUUID.equals(source.getUniqueId().toString()) || (ownerUUID.equals("admin") && source.hasPermission("shopz.admin")) || source.hasPermission("shopz.clear")){
-                        //destroy Frame, because owner or admin wants to destroy it
-                        HangingBreakEvent be = new HangingBreakEvent((Hanging) event.getEntity(), HangingBreakEvent.RemoveCause.DEFAULT);
-                        Bukkit.getServer().getPluginManager().callEvent(be);
+                    FileConfiguration localization = ShopzPlugin.getLocalization();
+                    String ownerUUID = ShopzPlugin.getShops().getString(path + ".owner");
+
+                    if(ownerUUID.equals(source.getUniqueId().toString())){
+                        //source is the owner of the shop
+                        breakFrame((Hanging) event.getEntity());
+
+                    }else if(ownerUUID.equals("admin") && source.hasPermission("shopz.admin")){
+                        //shop is an adminshop and source has permission to destroy those
+                        if(removeRequests.get(source) == null || !removeRequests.get(source).equals(path)){
+                            removeRequests.put(source, path);
+                            Block attachedTo = ShoppingUtil.getBlockWithAttachedItemFrame((ItemFrame) event.getEntity());
+                            source.sendMessage(ShopzPlugin.getPrefix() + ShopzPlugin.getLocalization().getString("destroy_shop_confirm")
+                            .replace("@type", localization.getString("admin_shop"))
+                            .replace("@pos", "(" + attachedTo.getX() + ", " + attachedTo.getY() + ", " + attachedTo.getZ() + ")"));
+                            event.setCancelled(true);
+                        }else breakFrame((Hanging) event.getEntity());
+
+                    }else if(source.hasPermission("shopz.clear") && !ownerUUID.equals("admin")){
+                        //source is not the owner, but has permission shopz.clear
+                        if(removeRequests.get(source) == null || !removeRequests.get(source).equals(path)){
+                            removeRequests.put(source, path);
+                            Block attachedTo = ShoppingUtil.getBlockWithAttachedItemFrame((ItemFrame) event.getEntity());
+                            source.sendMessage(ShopzPlugin.getPrefix() + ShopzPlugin.getLocalization().getString("destroy_shop_confirm")
+                                    .replace("@type", localization.getString("shop_title").replace("@user", Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).getName()))
+                                    .replace("@pos", "(" + attachedTo.getX() + ", " + attachedTo.getY() + ", " + attachedTo.getZ() + ")"));
+                            event.setCancelled(true);
+                        }else breakFrame((Hanging) event.getEntity());
+
                     }else{
-                        FileConfiguration localization = ShopzPlugin.getLocalization();
                         String message = ShopzPlugin.getPrefix();
                         message += ownerUUID.equals("admin")
                                 ? localization.getString("error_not_your_shop_admin")
@@ -46,5 +72,10 @@ public class RemoveItemFromItemFrameListener implements Listener{
                     event.setCancelled(true);
             }
         }
+    }
+
+    private void breakFrame(Hanging frame){
+        HangingBreakEvent be = new HangingBreakEvent(frame, HangingBreakEvent.RemoveCause.DEFAULT);
+        Bukkit.getServer().getPluginManager().callEvent(be);
     }
 }
