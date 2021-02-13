@@ -24,12 +24,14 @@ public class BreakItemFrameListener implements Listener{
             FileConfiguration shops = ShopzPlugin.getShops();
             String path = ShoppingUtil.blockToPath(attachedTo);
             if(shops.get(path) != null){
-                List<String> frames = (List<String>) shops.get(path + ".frames");
-                if(frames.contains(event.getEntity().getUniqueId().toString())){
-                    ShoppingUtil.removeShopFrame((ItemFrame) event.getEntity());
-                    ShoppingUtil.closeAllVisitorInventories(attachedTo);
-                    event.setCancelled(true);
-                }
+                if(event.getCause() == HangingBreakEvent.RemoveCause.DEFAULT){
+                    List<String> frames = (List<String>) shops.get(path + ".frames");
+                    if(frames.contains(event.getEntity().getUniqueId().toString())){
+                        ShoppingUtil.removeShopFrame((ItemFrame) event.getEntity());
+                        ShoppingUtil.closeAllVisitorInventories(attachedTo);
+                        event.setCancelled(true);
+                    }
+                }else event.setCancelled(true);
             }
         }
     }

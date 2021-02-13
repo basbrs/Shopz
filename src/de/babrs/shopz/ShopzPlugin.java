@@ -39,7 +39,6 @@ public class ShopzPlugin extends JavaPlugin{
         //TODO: Permission: Shops anderer löschen
         //TODO: OnItemFrameBreaking abfangen, ob bspw. ein Creeper den Frame zerstört hat (RemoveCause)
         //TODO: /help command
-        //TODO: reload command (lade config und localization neu)
         ShopzPlugin.description = super.getDescription();
 
         loadEconomy();

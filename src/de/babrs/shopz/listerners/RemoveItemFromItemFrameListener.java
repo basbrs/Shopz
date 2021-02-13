@@ -29,7 +29,7 @@ public class RemoveItemFromItemFrameListener implements Listener{
                 }
                 if(source != null){
                     String ownerUUID = (String) ShopzPlugin.getShops().get(path + ".owner");
-                    if(ownerUUID.equals(source.getUniqueId().toString()) || (ownerUUID.equals("admin") && source.hasPermission("shopz.admin"))){
+                    if(ownerUUID.equals(source.getUniqueId().toString()) || (ownerUUID.equals("admin") && source.hasPermission("shopz.admin")) || source.hasPermission("shopz.clear")){
                         //destroy Frame, because owner or admin wants to destroy it
                         HangingBreakEvent be = new HangingBreakEvent((Hanging) event.getEntity(), HangingBreakEvent.RemoveCause.DEFAULT);
                         Bukkit.getServer().getPluginManager().callEvent(be);
