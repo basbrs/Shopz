@@ -29,8 +29,8 @@ public class InventoryClickListener implements Listener{
                 ShoppingInventory shop = InventoriesSingleton.getShopWithInventory(event.getInventory());
                 for(int i = 0; i < transactions; i++)
                     switch(event.getClickedInventory().getItem(event.getRawSlot()).getType()){
-                        case STRUCTURE_VOID    -> shop.trade((Player) event.getWhoClicked(), true, 1);
-                        case BARRIER           -> shop.trade((Player) event.getWhoClicked(), false, 1);
+                        case STRUCTURE_VOID    -> shop.trade((Player) event.getWhoClicked(), true);
+                        case BARRIER           -> shop.trade((Player) event.getWhoClicked(), false);
                     }
             }
             else{

@@ -42,7 +42,7 @@ public class ShoppingInventory{
         this.shops = ShopzPlugin.getShops();
     }
 
-    public void trade(Player p, boolean buy, int transactionCount){
+    public void trade(Player p, boolean buy){
         OfflinePlayer owner = null;
         String prefix = ShopzPlugin.getPrefix();
 
