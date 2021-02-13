@@ -1,0 +1,8 @@
+permissions:
+    shopz.admin
+    shopz.clear
+    shopz.setcost
+    shopz.setstep
+    shopz.trade
+    shopz.create
+    shopz.reload

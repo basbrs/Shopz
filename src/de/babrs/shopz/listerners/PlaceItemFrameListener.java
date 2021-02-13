@@ -1,6 +1,5 @@
 package de.babrs.shopz.listerners;
 
-import de.babrs.shopz.InventoriesSingleton;
 import de.babrs.shopz.SetupInventory;
 import de.babrs.shopz.ShoppingUtil;
 import de.babrs.shopz.ShopzPlugin;
@@ -45,7 +44,7 @@ public class PlaceItemFrameListener implements Listener{
                     isAdminShop = false;
                 else if(frame.getLore().get(0).equals(adminFrameName)){
                     if(!p.hasPermission("shopz.admin")){
-                        frame.setAmount(0);
+                        p.getInventory().remove(frame);
                         event.setCancelled(true);
                         return;
                     }
