@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public class CommandReload{
     static boolean run(CommandSender sender){
         if(!sender.hasPermission("shopz.reload")){
-            sender.sendMessage(ChatColor.RED + "" + ShopzPlugin.getLocalization().get("no_permission"));
+            sender.sendMessage(ChatColor.RED + ShopzPlugin.getLocalization().getString("no_permission"));
             return true;
         }
 

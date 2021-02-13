@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 public class CommandAdmin{
     static boolean run(CommandSender sender){
         if(!sender.hasPermission("shopz.adminshop")){
-            sender.sendMessage(ChatColor.RED + "" + ShopzPlugin.getLocalization().get("no_permission"));
+            sender.sendMessage(ChatColor.RED + ShopzPlugin.getLocalization().getString("no_permission"));
             return true;
         }
 
