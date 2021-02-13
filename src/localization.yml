@@ -86,9 +86,13 @@ no_registered_shops: Der anvisierte Block beinhaltet keine Shops.
 # Erfolgsnachricht bei /shopz reload
 successful_reload: Konfigurationsdatei und Sprachpaket neu geladen.
 
-# Nachricht für Spieler, wenn er den Shop jemand anderen zerstören möchte (und das darf), oder bei der Zerstörung eines Adminshops
+# Nachricht für Spieler, wenn er den Shop von jemand anderem zerstören möchte (und das darf), oder bei der Zerstörung eines Adminshops
 #   mögliche Tags: @type (wird erstezt durch shop_title oder admin_shop), @pos
 destroy_shop_confirm: Du bist dabei den @type bei @pos zu zerstören. Wenn das richtig ist, greife ihn erneut an.
+
+# Nachricht für Spieler, wenn er den Shop von jemand anderem, oder einen adminshop zerstört hat
+#   mögliche Tags: @type (wird erstezt durch shop_title oder admin_shop), @pos
+destroyed_shop: Du hast den @type bei @pos zerstört.
 
 # Text, der Nutzer ausgegeben wird, wenn an einem Shop gekauft wird, der nicht über genügend Güter verfügt
 #   mögliche Tags: @pos, @good

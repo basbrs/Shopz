@@ -40,25 +40,35 @@ public class RemoveItemFromItemFrameListener implements Listener{
 
                     }else if(ownerUUID.equals("admin") && source.hasPermission("shopz.admin")){
                         //shop is an adminshop and source has permission to destroy those
+
+                        Block attachedTo = ShoppingUtil.getBlockWithAttachedItemFrame((ItemFrame) event.getEntity());
                         if(removeRequests.get(source) == null || !removeRequests.get(source).equals(path)){
                             removeRequests.put(source, path);
-                            Block attachedTo = ShoppingUtil.getBlockWithAttachedItemFrame((ItemFrame) event.getEntity());
-                            source.sendMessage(ShopzPlugin.getPrefix() + ShopzPlugin.getLocalization().getString("destroy_shop_confirm")
+                            source.sendMessage(ShopzPlugin.getPrefix() + ShopzPlugin.getLocalization().getString("destroyed_shop")
                             .replace("@type", localization.getString("admin_shop"))
                             .replace("@pos", "(" + attachedTo.getX() + ", " + attachedTo.getY() + ", " + attachedTo.getZ() + ")"));
                             event.setCancelled(true);
-                        }else breakFrame((Hanging) event.getEntity());
+                        }else{
+
+                            breakFrame((Hanging) event.getEntity());
+                        }
 
                     }else if(source.hasPermission("shopz.clear") && !ownerUUID.equals("admin")){
                         //source is not the owner, but has permission shopz.clear
+
+                        Block attachedTo = ShoppingUtil.getBlockWithAttachedItemFrame((ItemFrame) event.getEntity());
                         if(removeRequests.get(source) == null || !removeRequests.get(source).equals(path)){
                             removeRequests.put(source, path);
-                            Block attachedTo = ShoppingUtil.getBlockWithAttachedItemFrame((ItemFrame) event.getEntity());
                             source.sendMessage(ShopzPlugin.getPrefix() + ShopzPlugin.getLocalization().getString("destroy_shop_confirm")
                                     .replace("@type", localization.getString("shop_title").replace("@user", Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).getName()))
                                     .replace("@pos", "(" + attachedTo.getX() + ", " + attachedTo.getY() + ", " + attachedTo.getZ() + ")"));
                             event.setCancelled(true);
-                        }else breakFrame((Hanging) event.getEntity());
+                        }else{
+                            source.sendMessage(ShopzPlugin.getPrefix() + ShopzPlugin.getLocalization().getString("destroyed_shop")
+                                    .replace("@type", localization.getString("shop_title").replace("@user", Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).getName()))
+                                    .replace("@pos", "(" + attachedTo.getX() + ", " + attachedTo.getY() + ", " + attachedTo.getZ() + ")"));
+                            breakFrame((Hanging) event.getEntity());
+                        }
 
                     }else{
                         String message = ShopzPlugin.getPrefix();
