@@ -52,7 +52,7 @@ sell_success: Du hast @amount @good für @buy_price@currency an @buyer verkauft.
 
 # Text, der dem Nutzer beim Platzieren des Shop-ItemFrames angezeigt wird.
 #   mögliche Tags: @pos
-placed_shop_frame: Dein Shop wurde bei @pos registriert.
+placed_shop_frame: Du hast einen Shop bei @pos registriert.
 
 # Text, der dem Nutzer beim Platzieren des Admin Shop-ItemFrames angezeigt wird.
 #   mögliche Tags: @pos
@@ -60,7 +60,7 @@ placed_admin_shop: Bei @pos wurde ein Adminshop registriert.
 
 # Text, der dem Nutzer beim Platzieren des Shop-ItemFrames angezeigt wird, wenn für den jeweiligen Container bereits ein Shop vorhanden ist.
 #   mögliche Tags: @pos, @amount
-added_shop_frame: Dein Shop bei @pos hat jetzt @amount ItemFrames.
+added_shop_frame: Der Shop bei @pos hat jetzt @amount ItemFrames.
 
 # Text der dem Nutzer beim Entfernen eines Shop-ItemFrames gesendet wird
 #   mögliche Tags: @pos, @left

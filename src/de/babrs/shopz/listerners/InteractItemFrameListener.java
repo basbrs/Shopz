@@ -46,10 +46,10 @@ public class InteractItemFrameListener implements Listener{
                         //Frame ist ein registierter Shop-Frame
                         String ownerUUID = shops.getString(path + ".owner");
                         event.setCancelled(true);
-                        if(p.getUniqueId().toString().equals(ownerUUID) || (ownerUUID.equals("admin") && p.hasPermission("shopz.admin"))){
+                        if(p.getUniqueId().toString().equals(ownerUUID)){
                             ShoppingUtil.closeAllVisitorInventories(attachedTo);
 
-                            new SetupInventory(p, frame, shops.getBoolean(path + ".admin")).openSetupDialogue();
+                            new SetupInventory(p, frame, false).openSetupDialogue();
 
                             for(String uuid : frames)
                                 ShoppingUtil.setUnderConstruction((ItemFrame) Objects.requireNonNull(Bukkit.getEntity(UUID.fromString(uuid))));
@@ -100,7 +100,7 @@ public class InteractItemFrameListener implements Listener{
 
                             ItemMeta fillerMeta = filler.getItemMeta();
                             if(isAdminShop)
-                                fillerMeta.setDisplayName(ChatColor.DARK_PURPLE + title);
+                                fillerMeta.setDisplayName(ChatColor.MAGIC + "O " + ChatColor.DARK_PURPLE + title + ChatColor.RESET + ChatColor.MAGIC + " O");
                             else{
                                 lore.add(owner);
                                 fillerMeta.setDisplayName(title.replace("@user", ""));
