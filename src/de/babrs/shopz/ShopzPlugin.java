@@ -60,7 +60,11 @@ public class ShopzPlugin extends JavaPlugin{
     @Override
     public void onDisable(){
         closeInventories();
-        saveConfig();
+        try{
+            config.save(new File(getDataFolder(), "config.yml"));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
         saveShops();
     }
 
