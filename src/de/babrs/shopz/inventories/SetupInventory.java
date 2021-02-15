@@ -125,7 +125,12 @@ public class SetupInventory{
                 frame.setItem(good);
 
                 String pos = "(" + block.getX() + ", " + block.getY() + ", " + block.getZ() + ")";
-                owner.sendMessage(prefix + localization.getString(isAdminShop ?  "placed_admin_shop" : "placed_shop_frame").replace("@pos", pos));
+                if(isAdminShop){
+                    for(Player admin : Bukkit.getOnlinePlayers())
+                        if(admin.hasPermission("shopz.admin"))
+                            admin.sendMessage(prefix + localization.getString("placed_admin_shop").replace("@pos", pos));
+                }else
+                    owner.sendMessage(prefix + localization.getString("placed_shop_frame").replace("@pos", pos));
             }
         }else{
             List<String> frames = (List<String>) shops.get(path + ".frames");
