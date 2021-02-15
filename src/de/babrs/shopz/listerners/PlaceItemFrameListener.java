@@ -97,7 +97,7 @@ public class PlaceItemFrameListener implements Listener{
                         shops.set(coordinate + ".frame_count", 1);
                         shops.set(coordinate + ".admin", isAdminShop);
                     }else{
-                        p.sendMessage(ChatColor.RED + ShopzPlugin.getLocalization().getString("no_permission"));
+                        p.sendMessage(ShopzPlugin.getLocalization().getString("no_permission"));
                         event.setCancelled(true);
                     }
                 }

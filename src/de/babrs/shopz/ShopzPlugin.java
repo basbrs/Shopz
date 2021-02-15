@@ -1,5 +1,6 @@
 package de.babrs.shopz;
 
+import de.babrs.shopz.commands.CommandHelp;
 import de.babrs.shopz.commands.CommandShopz;
 import de.babrs.shopz.inventories.InventoriesSingleton;
 import de.babrs.shopz.inventories.SetupInventory;
@@ -67,9 +68,8 @@ public class ShopzPlugin extends JavaPlugin{
     public boolean onCommand(CommandSender sender, Command cmd, String lbl, String[] args){
         String name = cmd.getName().toLowerCase();
 
-        if(name.equals("shopz")){
+        if(name.equals("shopz"))
             return CommandShopz.run(sender, cmd, lbl, args);
-        }
         return false;
     }
 

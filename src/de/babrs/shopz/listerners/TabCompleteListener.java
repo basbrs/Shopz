@@ -17,7 +17,7 @@ public class TabCompleteListener implements Listener{
             loadAliases();
 
         if(event.getBuffer().startsWith("/shopz ")){
-            if(!event.getBuffer().substring(7).contains(" ")){
+            if(!event.getBuffer().substring(7).contains(" ") || event.getBuffer().startsWith("/shopz help ")){
                 List<String> senderCompletion = new ArrayList<>();
 
                 for(String completion : completions){

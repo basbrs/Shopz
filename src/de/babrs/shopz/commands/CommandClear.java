@@ -19,7 +19,7 @@ import java.util.UUID;
 public class CommandClear{
     static boolean run(CommandSender sender){
         if(!sender.hasPermission("shopz.clear")){
-            sender.sendMessage(ChatColor.RED + ShopzPlugin.getLocalization().getString("no_permission"));
+            sender.sendMessage(ShopzPlugin.getLocalization().getString("no_permission"));
             return true;
         }
 

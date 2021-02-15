@@ -142,7 +142,7 @@ public class InteractItemFrameListener implements Listener{
 
                             p.openInventory(inv);
                         }else{
-                            p.sendMessage(ChatColor.RED + ShopzPlugin.getLocalization().getString("no_permission"));
+                            p.sendMessage(ShopzPlugin.getLocalization().getString("no_permission"));
                         }
                     }
                 }

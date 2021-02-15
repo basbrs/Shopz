@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 public class CommandSetCost{
     static boolean run(CommandSender sender, String arg){
         if(!sender.hasPermission("shopz.setcost")){
-            sender.sendMessage(ChatColor.RED + ShopzPlugin.getLocalization().getString("no_permission"));
+            sender.sendMessage(ShopzPlugin.getLocalization().getString("no_permission"));
             return true;
         }
 

@@ -25,12 +25,16 @@ public class CommandShopz{
                 return CommandAdmin.run(sender);
             }else if(args[0].equalsIgnoreCase("reload")){
                 return CommandReload.run(sender);
+            }else if(args[0].equalsIgnoreCase("help")){
+                return CommandHelp.run(sender);
             }
         }else if(args.length == 2){
             if(args[0].equalsIgnoreCase("setCost")){
                 return CommandSetCost.run(sender, args[1]);
             }else if(args[0].equalsIgnoreCase("setStep")){
                 return CommandSetStep.run(sender, args[1]);
+            }else if(args[0].equalsIgnoreCase("help")){
+                return CommandHelp.run(sender, args[1]);
             }
         }
         return false;

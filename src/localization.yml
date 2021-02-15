@@ -73,6 +73,27 @@ remove_last_frame: Dein Shop bei @pos wurde zerstört.
 # Text der Nutzer im leeren Verkaufsslot angezeigt wird
 empty_settings_slot: Hier zu handelnden Gegenstand ablegen
 
+# Intro für Hilfetexte
+help_intro: "Hilfe für alle erlaubten Befehle von §6/shopz:"
+
+# Hilfetext für den Befehl /shopz admin
+help_admin: Erstellt einen ItemFrame für einen Adminshop in deinem Inventar
+
+# Hilfetext für den Befehl /shopz clear
+help_clear: Löscht alle Shops (inklusive Adminshops), die sich am anvisierten Block befinden.
+
+# Hilfetext für den Befehl /shopz help
+help_help: Verwende für nähere Informationen zu /shopz <arg> (siehe Vorschlagsliste).
+
+# Hilfetext für den Befehl /shopz reload
+help_reload: Lade die Sprach-, sowie Konfigurationsdatei von der Festplatte neu. Überschreibt mit setCost und setStep gemachte Änderungen seit dem letzten Restart.
+
+# Hilfetext für den Befehl /shopz setcost
+help_setcost: Setze die Kosten für das Erstellen eines Shop-ItemFrames am Amboss auf <arg> (Ganzzahl).
+
+# Hilfetext für den Befehl /shopz setstep
+help_setstep: Setze die Schrittgröße für den Preis beim Erstellen eines Shops auf <arg> (Ganzzahl).
+
 # Text der nach dem erfolgreichen Bereinigen eines Blockes mit dem clear-Befehl ausgegeben wird
 #   mögliche Tags: @amount, @pos
 cleared_frames: Es wurden @amount ItemFrames für den Shop bei @pos gelöscht.
@@ -149,4 +170,8 @@ error_not_your_shop: Dieser Shop gehört nicht dir, sondern @owner.
 error_not_your_shop_admin: Dieser Shop gehört nicht dir, sondern ist ein Adminshop.
 
 # Fehlermeldung (rot und ohne Prefix), wenn der Spieler (oder Sender) ohne Permission agiert.
-no_permission: Dir fehlen die nötigen Berechtigungen, um das durchzuführen.
+no_permission: §cDir fehlen die nötigen Berechtigungen, um das durchzuführen.
+
+# Wird Nutzer angezeigt, wenn er /shopz help @arg eingibt, wobei es den Befehl @arg nicht gibt
+#   mögliche Tags: @arg
+no_such_command: Das Kommando /shopz @arg existiert nicht.
