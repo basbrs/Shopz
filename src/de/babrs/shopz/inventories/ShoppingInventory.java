@@ -51,7 +51,8 @@ public class ShoppingInventory{
         if(!isAdminShop)
             owner = Bukkit.getOfflinePlayer(UUID.fromString(shops.getString(ShoppingUtil.blockToPath(getBlock()) + ".owner")));
 
-        if(isAdminShop || econ.getBalance(p) >= buyPrice){
+        boolean hasMoney = (isAdminShop && !buy) || (buy && econ.getBalance(p) >= buyPrice) || (!buy && econ.getBalance(owner) >= sellPrice);
+        if(hasMoney){
             boolean hasInvSpace = buy
                     ? ShoppingUtil.hasInventorySpaceFor(p.getInventory(), getStack(amount))
                     : isAdminShop || ShoppingUtil.hasInventorySpaceFor(block.getInventory(), getStack(amount));

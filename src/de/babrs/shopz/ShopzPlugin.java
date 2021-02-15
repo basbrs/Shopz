@@ -24,7 +24,7 @@ import java.io.*;
 import java.util.logging.Logger;
 
 public class ShopzPlugin extends JavaPlugin{
-    private static final Logger logger = Logger.getLogger(ShopzPlugin.class.getName());
+    private static final Logger logger = Logger.getLogger("Shopz");
     private static Economy econ = null;
     private static PluginDescriptionFile description;
     private static FileConfiguration config;
