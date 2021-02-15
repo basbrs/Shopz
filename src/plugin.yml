@@ -1,5 +1,5 @@
 name: Shopz
-version: 0.1
+version: 1.0
 author: babrs
 main: de.babrs.shopz.ShopzPlugin
 description: Plugin handling the trading in shops, by babrs.

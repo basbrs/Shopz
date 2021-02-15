@@ -1,6 +1,5 @@
 package de.babrs.shopz;
 
-import de.babrs.shopz.commands.CommandHelp;
 import de.babrs.shopz.commands.CommandShopz;
 import de.babrs.shopz.inventories.InventoriesSingleton;
 import de.babrs.shopz.inventories.SetupInventory;
@@ -37,9 +36,7 @@ public class ShopzPlugin extends JavaPlugin{
 
     @Override
     public void onEnable(){
-        //TODO: Permissions (auch für Shoperstellung mit Frame)
         //TODO: Doku?
-        //TODO: /help command
         ShopzPlugin.description = super.getDescription();
 
         loadEconomy();
