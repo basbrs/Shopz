@@ -32,8 +32,7 @@ public class InventoryClickListener implements Listener{
                         case STRUCTURE_VOID    -> shop.trade((Player) event.getWhoClicked(), true);
                         case BARRIER           -> shop.trade((Player) event.getWhoClicked(), false);
                     }
-            }
-            else{
+            }else{
                 SetupInventory setup = InventoriesSingleton.getSetupFrom((Player) event.getWhoClicked());
                 if(setup != null && event.getRawSlot() < 5 && event.getRawSlot() >= 0){
                     if(event.getClick() == ClickType.LEFT)

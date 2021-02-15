@@ -37,7 +37,6 @@ public class ShopzPlugin extends JavaPlugin{
     @Override
     public void onEnable(){
         //TODO: Permissions (auch für Shoperstellung mit Frame)
-        //TODO: Commands
         //TODO: Doku?
         //TODO: /help command
         ShopzPlugin.description = super.getDescription();
@@ -60,11 +59,7 @@ public class ShopzPlugin extends JavaPlugin{
     @Override
     public void onDisable(){
         closeInventories();
-        try{
-            config.save(new File(getDataFolder(), "config.yml"));
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        savePluginConfig();
         saveShops();
     }
 
@@ -171,6 +166,14 @@ public class ShopzPlugin extends JavaPlugin{
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void savePluginConfig(){
+        try{
+            config.save(new File(getDataFolder(), "config.yml"));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     public static void saveShops(){

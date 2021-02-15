@@ -4,6 +4,7 @@ import de.babrs.shopz.inventories.SetupInventory;
 import de.babrs.shopz.util.ShoppingUtil;
 import de.babrs.shopz.ShopzPlugin;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ItemFrame;
@@ -86,14 +87,19 @@ public class PlaceItemFrameListener implements Listener{
                     p.sendMessage(prefix + localization.getString("added_shop_frame")
                             .replace("@pos", pos).replace("@amount", Integer.toString(frameCount + 1)));
                 }else{
-                    new SetupInventory(p, (ItemFrame) event.getEntity(), isAdminShop).openSetupDialogue();
+                    if(p.hasPermission("shopz.create")){
+                        new SetupInventory(p, (ItemFrame) event.getEntity(), isAdminShop).openSetupDialogue();
 
-                    shops.set(coordinate + ".owner", isAdminShop ? "admin" : p.getUniqueId().toString());
-                    ArrayList<String> frames = new ArrayList<>();
-                    frames.add(event.getEntity().getUniqueId().toString());
-                    shops.set(coordinate + ".frames", frames);
-                    shops.set(coordinate + ".frame_count", 1);
-                    shops.set(coordinate + ".admin", isAdminShop);
+                        shops.set(coordinate + ".owner", isAdminShop ? "admin" : p.getUniqueId().toString());
+                        ArrayList<String> frames = new ArrayList<>();
+                        frames.add(event.getEntity().getUniqueId().toString());
+                        shops.set(coordinate + ".frames", frames);
+                        shops.set(coordinate + ".frame_count", 1);
+                        shops.set(coordinate + ".admin", isAdminShop);
+                    }else{
+                        p.sendMessage(ChatColor.RED + ShopzPlugin.getLocalization().getString("no_permission"));
+                        event.setCancelled(true);
+                    }
                 }
             }
         }

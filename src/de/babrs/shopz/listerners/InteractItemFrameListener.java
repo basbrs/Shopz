@@ -55,7 +55,7 @@ public class InteractItemFrameListener implements Listener{
                             new SetupInventory(p, frame, false).openSetupDialogue();
                             for(String uuid : frames)
                                 ShoppingUtil.setUnderConstruction((ItemFrame) Objects.requireNonNull(Bukkit.getEntity(UUID.fromString(uuid))));
-                        }else{
+                        }else if(p.hasPermission("shopz.trade")){
                             //Wird der Shop in diesem Moment erneut durch den Besitzer editiert?
                             String frameName = frame.getItem().getItemMeta().getDisplayName();
                             Material frameDisplay = frame.getItem().getType();
@@ -101,8 +101,7 @@ public class InteractItemFrameListener implements Listener{
                             buy.setItemMeta(buyMeta);
 
                             ItemMeta fillerMeta = filler.getItemMeta();
-                            if(isAdminShop)
-                                fillerMeta.setDisplayName(ChatColor.MAGIC + "O " + ChatColor.DARK_PURPLE + title + ChatColor.RESET + ChatColor.MAGIC + " O");
+                            if(isAdminShop) fillerMeta.setDisplayName(ChatColor.MAGIC + "O " + ChatColor.DARK_PURPLE + title + ChatColor.RESET + ChatColor.MAGIC + " O");
                             else{
                                 lore.add(owner);
                                 fillerMeta.setDisplayName(title.replace("@user", ""));
@@ -142,6 +141,8 @@ public class InteractItemFrameListener implements Listener{
                             InventoriesSingleton.addShop(new ShoppingInventory(inv, (BlockInventoryHolder) attachedTo.getState(), good.getType(), amount, buyPrice, sellPrice));
 
                             p.openInventory(inv);
+                        }else{
+                            p.sendMessage(ChatColor.RED + ShopzPlugin.getLocalization().getString("no_permission"));
                         }
                     }
                 }
