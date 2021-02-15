@@ -60,6 +60,7 @@ public class ShopzPlugin extends JavaPlugin{
     @Override
     public void onDisable(){
         closeInventories();
+        saveConfig();
         saveShops();
     }
 

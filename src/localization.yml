@@ -86,6 +86,14 @@ no_registered_shops: Der anvisierte Block beinhaltet keine Shops.
 # Erfolgsnachricht bei /shopz reload
 successful_reload: Konfigurationsdatei und Sprachpaket neu geladen.
 
+# Gesendet beim Erfolgreichen Ändern des Preises zum Erstellen von Shops mit /shopz setcost
+#   mögliche Tags: @cost, @currency
+set_cost_successful: Der Preis für das Erstellen von Shop-Frames wurde auf @cost@currency festgelegt.
+
+# Gesendet beim Erfolgreichen Ändern der Schrittgröße zu Preisänderungen von Shops mit /shopz setstep
+#   mögliche Tags: @step, @currency
+set_step_successful: Die Schrittgröße für Preiseinstellungen wurde auf @step@currency festgelegt.
+
 # Nachricht für Spieler, wenn er den Shop von jemand anderem zerstören möchte (und das darf), oder bei der Zerstörung eines Adminshops
 #   mögliche Tags: @type (wird erstezt durch shop_title oder admin_shop), @pos
 destroy_shop_confirm: Du bist dabei den @type bei @pos zu zerstören. Wenn das richtig ist, greife ihn erneut an.

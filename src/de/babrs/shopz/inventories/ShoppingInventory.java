@@ -54,7 +54,7 @@ public class ShoppingInventory{
         if(isAdminShop || econ.getBalance(p) >= buyPrice){
             boolean hasInvSpace = buy
                     ? ShoppingUtil.hasInventorySpaceFor(p.getInventory(), getStack(amount))
-                    : isAdminShop || ShoppingUtil.hasInventorySpaceFor(getChestInventory(), getStack(amount));
+                    : isAdminShop || ShoppingUtil.hasInventorySpaceFor(block.getInventory(), getStack(amount));
             if(hasInvSpace){
                 if(buy ? transferBuy() : transferSell()){
                     if(buy){
@@ -118,10 +118,6 @@ public class ShoppingInventory{
 
     public Inventory getShopInventory(){
         return shopInventory;
-    }
-
-    public Inventory getChestInventory(){
-        return block.getInventory();
     }
 
     public Block getBlock(){
