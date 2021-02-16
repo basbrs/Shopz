@@ -23,6 +23,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.*;
 import java.util.logging.Logger;
 
+/**
+ * ShopzPlugin by babrs
+ *
+ * This plugin enables you to deploy dynamic User- and AdminServers for trading ItemStacks of up to 64 Items.
+ * You are able to open shops with renamed ItemFrames (just use an anvil and rename a stack of ItemFrames to
+ * whatever is specified in config.yml/frame_name ($shop per default).
+ * AdminShops can be created by using the /shopz admin command and using the resulting ItemFrame as previously explained.
+ */
 public class ShopzPlugin extends JavaPlugin{
     private static final Logger logger = Logger.getLogger("Shopz");
     private static Economy econ = null;
@@ -34,9 +42,12 @@ public class ShopzPlugin extends JavaPlugin{
     private static String prefix;
     private static ShopzPlugin instance;
 
+    /**
+     * onEnable(), inherited from JavaPlugin, loads configurations and shops, registers events and saves a singleton of
+     * this class for later use.
+     */
     @Override
     public void onEnable(){
-        //TODO: Doku?
         ShopzPlugin.description = super.getDescription();
 
         loadEconomy();
@@ -48,12 +59,20 @@ public class ShopzPlugin extends JavaPlugin{
         instance = this;
     }
 
+    /**
+     * Reload config.yml from harddrive, this will override all changes made since the last serverrestart.
+     * Will also redefine the static config-object.
+     */
     @Override
     public void reloadConfig(){
         super.reloadConfig();
         config = super.getConfig();
     }
 
+    /**
+     * Saves config.yml and shops.yml when shutting down the server or unloading the plugin.
+     * Will also close all opened shops and SetupInventories.
+     */
     @Override
     public void onDisable(){
         closeInventories();
@@ -61,6 +80,9 @@ public class ShopzPlugin extends JavaPlugin{
         saveShops();
     }
 
+    /**
+     * Register command /shopz
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String lbl, String[] args){
         String name = cmd.getName().toLowerCase();
@@ -70,34 +92,9 @@ public class ShopzPlugin extends JavaPlugin{
         return false;
     }
 
-    public static PluginDescriptionFile getPluginDescription(){
-        return description;
-    }
-
-    public static FileConfiguration getPluginConfig(){
-        return config;
-    }
-
-    public static FileConfiguration getShops(){
-        return shops;
-    }
-
-    public static FileConfiguration getLocalization(){
-        return localization;
-    }
-
-    public static ShopzPlugin getInstance(){
-        return instance;
-    }
-
-    public static Economy getEconomy(){
-        return econ;
-    }
-
-    public static String getPrefix(){
-        return prefix;
-    }
-
+    /**
+     * Register all events for listeners from package *.listeners
+     */
     private void registerEvents(){
         PluginManager manager = getServer().getPluginManager();
         manager.registerEvents(new InventoryCloseListener(), this);
@@ -110,11 +107,17 @@ public class ShopzPlugin extends JavaPlugin{
         manager.registerEvents(new TabCompleteListener(), this);
     }
 
+    /**
+     * Load vault-economy using the RegisteredServiceProvider (https://dev.bukkit.org/projects/vault)
+     */
     private void loadEconomy(){
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         econ = rsp.getProvider();
     }
 
+    /**
+     * Create shops.yml if it does not exist, load it from harddrive otherwise
+     */
     private void loadShops(){
         shopsFile = new File(getDataFolder(), "shops.yml");
 
@@ -130,20 +133,35 @@ public class ShopzPlugin extends JavaPlugin{
         }
     }
 
+    /**
+     * Reload localization and config from harddrive, this will revert all changes made since last filesave.
+     * Will be executed using the "/shopz reload" command.
+     */
     public static void reloadConfigurations(){
         instance.loadLocalization();
         instance.loadConfig();
     }
 
+    /**
+     * Load localization.yml from harddrive using the loadFile()-Method.
+     */
     private void loadLocalization(){
         localization = loadFile("localization.yml");
     }
 
+    /**
+     * Loads config.yml from harddrive using the loadFile()-Method, as well as saves the prefix in the static String.
+     */
     private void loadConfig(){
         ShopzPlugin.config = loadFile("config.yml");
         ShopzPlugin.prefix = (String) config.get("chat_prefix");
     }
 
+    /**
+     * Create <path> if it does not exist, load it from harddrive otherwise. Files should be saved in UTF-8 for compatibility.
+     *
+     * @param path: Name and ending of file to load, e.g.: "filename.yml"
+     */
     private YamlConfiguration loadFile(String path){
         File file = new File(getDataFolder(), path);
 
@@ -165,6 +183,9 @@ public class ShopzPlugin extends JavaPlugin{
         return null;
     }
 
+    /**
+     * Saves Plugin-Config on shutdown.
+     */
     private void savePluginConfig(){
         try{
             config.save(new File(getDataFolder(), "config.yml"));
@@ -173,6 +194,9 @@ public class ShopzPlugin extends JavaPlugin{
         }
     }
 
+    /**
+     * Saves Shops on shutdown, will also be called when shops are created to make plugin more resistend to crashes.
+     */
     public static void saveShops(){
         try{
             shops.save(shopsFile);
@@ -181,6 +205,10 @@ public class ShopzPlugin extends JavaPlugin{
         }
     }
 
+    /**
+     * Close ShopInventories of all online Players on shutdown or Plugin-unloading. Used, because leaving them open might
+     * cause weird behaviour when using /reload, has pretty much no use when regularly restarting the server.
+     */
     private void closeInventories(){
         for(Player p : Bukkit.getOnlinePlayers()){
             SetupInventory setup = InventoriesSingleton.getSetupFrom(p);
@@ -194,5 +222,64 @@ public class ShopzPlugin extends JavaPlugin{
         for(ShoppingInventory inv : InventoriesSingleton.getOpenShops())
             for(HumanEntity e : inv.getShopInventory().getViewers())
                 e.closeInventory();
+    }
+
+    //Getter-Methods
+
+    /**
+     * Getter for PluginDescription (from plugin.yml)
+     * @return PluginDescriptionFile as specified from Bukkit
+     */
+    public static PluginDescriptionFile getPluginDescription(){
+        return description;
+    }
+
+    /**
+     * Getter for PluginConfig (from config.yml)
+     * @return FileConfiguration as specified from Bukkit, including chat-prefix and costs/stepsizes
+     */
+    public static FileConfiguration getPluginConfig(){
+        return config;
+    }
+
+    /**
+     * Getter for FileConfiguration shops (from shops.yml)
+     * @return FileConfiguration, including all shops
+     */
+    public static FileConfiguration getShops(){
+        return shops;
+    }
+
+    /**
+     * Getter for FileConfiguration localization (from localization.yml) for multi-language and custom messages.
+     * @return FileConfiguration, including all shops
+     */
+    public static FileConfiguration getLocalization(){
+        return localization;
+    }
+
+    /**
+     * Getter for ShopzPlugin singleton
+     * @return the instance of the plugin
+     */
+    public static ShopzPlugin getInstance(){
+        return instance;
+    }
+
+    /**
+     * Getter for Vault Economy-Plugin
+     * @return Economy
+     */
+    public static Economy getEconomy(){
+        return econ;
+    }
+
+    /**
+     * Getter for Chat-Prefix as specified in config.yml, this will display at the beginning of pretty much every message
+     * the plugin sends to users (excluding console-outputs and some error-messages)
+     * @return String prefix
+     */
+    public static String getPrefix(){
+        return prefix;
     }
 }
