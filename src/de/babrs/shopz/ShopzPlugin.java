@@ -24,12 +24,13 @@ import java.io.*;
 import java.util.logging.Logger;
 
 /**
- * ShopzPlugin by babrs
+ * {@link ShopzPlugin} by babrs
  *
- * This plugin enables you to deploy dynamic User- and AdminServers for trading ItemStacks of up to 64 Items.
- * You are able to open shops with renamed ItemFrames (just use an anvil and rename a stack of ItemFrames to
- * whatever is specified in config.yml/frame_name ($shop per default).
- * AdminShops can be created by using the /shopz admin command and using the resulting ItemFrame as previously explained.
+ * This plugin enables you to deploy dynamic User- and AdminServers for trading {@link org.bukkit.inventory.ItemStack} of
+ * up to 64 Items. You are able to open shops with renamed {@link org.bukkit.entity.ItemFrame} (just use an anvil and
+ * rename a stack of {@link org.bukkit.entity.ItemFrame} to whatever is specified in config.yml/frame_name ($shop per default).
+ * AdminShops can be created by using the /shopz admin command and using the resulting {@link org.bukkit.entity.ItemFrame}
+ * as previously explained.
  */
 public class ShopzPlugin extends JavaPlugin{
     private static final Logger logger = Logger.getLogger("Shopz");
@@ -43,7 +44,7 @@ public class ShopzPlugin extends JavaPlugin{
     private static ShopzPlugin instance;
 
     /**
-     * onEnable(), inherited from JavaPlugin, loads configurations and shops, registers events and saves a singleton of
+     * onEnable(), inherited from {@link JavaPlugin}, loads configurations and shops, registers events and saves a singleton of
      * this class for later use.
      */
     @Override
@@ -60,7 +61,7 @@ public class ShopzPlugin extends JavaPlugin{
     }
 
     /**
-     * Reload config.yml from harddrive, this will override all changes made since the last serverrestart.
+     * Reload config.yml from hard drive, this will override all changes made since the last server restart.
      * Will also redefine the static config-object.
      */
     @Override
@@ -71,7 +72,7 @@ public class ShopzPlugin extends JavaPlugin{
 
     /**
      * Saves config.yml and shops.yml when shutting down the server or unloading the plugin.
-     * Will also close all opened shops and SetupInventories.
+     * Will also close all opened {@link ShoppingInventory} and {@link SetupInventory}.
      */
     @Override
     public void onDisable(){
@@ -93,7 +94,7 @@ public class ShopzPlugin extends JavaPlugin{
     }
 
     /**
-     * Register all events for listeners from package *.listeners
+     * Register all events for {@link org.bukkit.event.Listener} from package {@link de.babrs.shopz.listerners}
      */
     private void registerEvents(){
         PluginManager manager = getServer().getPluginManager();
@@ -116,7 +117,7 @@ public class ShopzPlugin extends JavaPlugin{
     }
 
     /**
-     * Create shops.yml if it does not exist, load it from harddrive otherwise
+     * Create shops.yml if it does not exist, load it from hard drive otherwise
      */
     private void loadShops(){
         shopsFile = new File(getDataFolder(), "shops.yml");
@@ -134,7 +135,7 @@ public class ShopzPlugin extends JavaPlugin{
     }
 
     /**
-     * Reload localization and config from harddrive, this will revert all changes made since last filesave.
+     * Reload localization and config from hard drive, this will revert all changes made since last file save.
      * Will be executed using the "/shopz reload" command.
      */
     public static void reloadConfigurations(){
@@ -143,14 +144,14 @@ public class ShopzPlugin extends JavaPlugin{
     }
 
     /**
-     * Load localization.yml from harddrive using the loadFile()-Method.
+     * Load localization.yml from hard drive using the loadFile()-Method.
      */
     private void loadLocalization(){
         localization = loadFile("localization.yml");
     }
 
     /**
-     * Loads config.yml from harddrive using the loadFile()-Method, as well as saves the prefix in the static String.
+     * Loads config.yml from hardd rive using the loadFile()-Method, as well as saves the prefix in the static String.
      */
     private void loadConfig(){
         ShopzPlugin.config = loadFile("config.yml");
@@ -158,7 +159,7 @@ public class ShopzPlugin extends JavaPlugin{
     }
 
     /**
-     * Create <path> if it does not exist, load it from harddrive otherwise. Files should be saved in UTF-8 for compatibility.
+     * Create <path> if it does not exist, load it from hard drive otherwise. Files should be saved in UTF-8 for compatibility.
      *
      * @param path: Name and ending of file to load, e.g.: "filename.yml"
      */
@@ -195,7 +196,7 @@ public class ShopzPlugin extends JavaPlugin{
     }
 
     /**
-     * Saves Shops on shutdown, will also be called when shops are created to make plugin more resistend to crashes.
+     * Saves Shops on shutdown, will also be called when shops are created to make plugin more resistant to crashes.
      */
     public static void saveShops(){
         try{
@@ -206,8 +207,8 @@ public class ShopzPlugin extends JavaPlugin{
     }
 
     /**
-     * Close ShopInventories of all online Players on shutdown or Plugin-unloading. Used, because leaving them open might
-     * cause weird behaviour when using /reload, has pretty much no use when regularly restarting the server.
+     * Close {@link ShoppingInventory} of all online {@link Player} on shutdown or Plugin-unloading. Used, because leaving
+     * them open might cause weird behaviour when using /reload, has no use when regularly restarting the server.
      */
     private void closeInventories(){
         for(Player p : Bukkit.getOnlinePlayers()){
@@ -227,8 +228,8 @@ public class ShopzPlugin extends JavaPlugin{
     //Getter-Methods
 
     /**
-     * Getter for PluginDescription (from plugin.yml)
-     * @return PluginDescriptionFile as specified from Bukkit
+     * Getter for {@link PluginDescriptionFile} (from plugin.yml)
+     * @return PluginDescriptionFile as specified from {@link Bukkit}
      */
     public static PluginDescriptionFile getPluginDescription(){
         return description;
@@ -236,7 +237,7 @@ public class ShopzPlugin extends JavaPlugin{
 
     /**
      * Getter for PluginConfig (from config.yml)
-     * @return FileConfiguration as specified from Bukkit, including chat-prefix and costs/stepsizes
+     * @return FileConfiguration as specified from {@link Bukkit}, including chat-prefix and costs/stepsizes
      */
     public static FileConfiguration getPluginConfig(){
         return config;
@@ -259,7 +260,7 @@ public class ShopzPlugin extends JavaPlugin{
     }
 
     /**
-     * Getter for ShopzPlugin singleton
+     * Getter for {@link ShopzPlugin} singleton
      * @return the instance of the plugin
      */
     public static ShopzPlugin getInstance(){
@@ -267,7 +268,7 @@ public class ShopzPlugin extends JavaPlugin{
     }
 
     /**
-     * Getter for Vault Economy-Plugin
+     * Getter for {@link net.milkbowl.vault.Vault} Economy-Plugin
      * @return Economy
      */
     public static Economy getEconomy(){

@@ -26,8 +26,8 @@ import java.util.*;
  */
 public class ShoppingUtil{
     /**
-     * Returns the path to navigate to a shop, placed at Block b in the world of that Block.
-     * @param b Block, usually the InventoryHolder of a Shop.
+     * Returns the path to navigate to a shop, placed at Block b in the world of that {@link Block}.
+     * @param b {@link Block}, usually the {@link InventoryHolder} of a Shop.
      * @return yaml-path looking like this: "world.xxx|yyy|zzz", does not include a "." at the end!
      */
     public static String blockToPath(Block b){
@@ -40,7 +40,7 @@ public class ShoppingUtil{
     }
 
     /**
-     * Changes the Lore and DisplayName of an ItemStack
+     * Changes the Lore and DisplayName of an {@link ItemStack}
      * @param is ItemStack to change
      * @param name desired DisplayName
      * @param lore List of Lore-Lines
@@ -53,18 +53,18 @@ public class ShoppingUtil{
     }
 
     /**
-     * Returns the Block an ItemFrame is placed against, works in all directions.
-     * @param e ItemFrame placed at the desired Block.
-     * @return The Block with the attached Frame.
+     * Returns the {@link Block} an {@link ItemFrame} is placed against, works in all directions.
+     * @param e {@link ItemFrame} placed at the desired {@link Block}.
+     * @return The {@link Block} with the attached {@link ItemFrame}.
      */
     public static Block getBlockWithAttachedItemFrame(ItemFrame e){
         return e.getLocation().add(e.getAttachedFace().getDirection()).getBlock();
     }
 
     /**
-     * Places a placeholder-ItemStack (GoldIngot with specific name) in the ItemFrame @frame to cancel editing or
-     * destruction of said frame through other Players/Entities/Environment.
-     * @param frame The Frame to lock.
+     * Places a placeholder-{@link ItemStack} (ItemStack.GOLD_INGOT with specific name) in the {@link ItemFrame} @frame
+     * to cancel editing or destruction of said frame through other Players/Entities/Environment.
+     * @param frame The {@link ItemFrame} to lock.
      */
     public static void setUnderConstruction(ItemFrame frame){
         ItemStack underWork = new ItemStack(Material.GOLD_INGOT);
@@ -75,8 +75,8 @@ public class ShoppingUtil{
     }
 
     /**
-     * Removes an ItemFrame-Entity from the world and drops a ShopToken if it was no AdminShop.
-     * @param frame ItemFrame-Entity to destroy.
+     * Removes an {@link ItemFrame}-Entity from the world and drops a ShopToken if it was no AdminShop.
+     * @param frame {@link ItemFrame}-Entity to destroy.
      * @param adminShop true if the shop was an AdminShop (will not drop a Token), false otherwise.
      */
     public static void removeAndDropItemFrame(ItemFrame frame, boolean adminShop){
@@ -88,10 +88,10 @@ public class ShoppingUtil{
     }
 
     /**
-     * Creates ShopTokens, is called by the /shopz admin-command (to create AdminShopTokens), or by the @AnvilRenameListener.
-     * @param amount Size of ItemStack to create.
+     * Creates ShopTokens, is called by the /shopz admin-command (to create AdminShopTokens), or by the {@link de.babrs.shopz.listerners.AnvilRenameListener}.
+     * @param amount Size of {@link ItemStack} to create.
      * @param adminShop Whether the result should be AdminShopTokens (true), or regular ShopTokens (false).
-     * @return An ItemStack of @amount ShopTokens (or AdminShopTokens).
+     * @return An {@link ItemStack} of @amount ShopTokens (or AdminShopTokens).
      */
     public static ItemStack createShopTokens(int amount, boolean adminShop){
         ItemStack itemStack = new ItemStack(Material.ITEM_FRAME, amount);
@@ -101,9 +101,9 @@ public class ShoppingUtil{
     }
 
     /**
-     * Ensures validity of Lore to display a ShopToken, will add an Admin-Tag to an AdminShopToken if specified.
+     * Ensures validity of lore to display a ShopToken, will add an Admin-Tag to an AdminShopToken if specified.
      * @param adminShop true if the result should be an identifier for the AdminShopTokens, false otherwise.
-     * @return The String that will later be used to check an ItemFrame for validity of being a (Admin-) ShopToken.
+     * @return The String that will later be used to check an {@link ItemFrame} for validity of being a (Admin-) ShopToken.
      */
     public static String getValidToken(boolean adminShop){
         String admin = adminShop ? "Admin " : "";
@@ -111,7 +111,7 @@ public class ShoppingUtil{
     }
 
     /**
-     * Turns the Enumeration-Name of Material material from "ALL_UPPERCASE_WITH_UNDERSCORES" into "All Uppercase With Spaces".
+     * Turns the Enumeration-Name of {@link Material} material from "ALL_UPPERCASE_WITH_UNDERSCORES" into "All Uppercase With Spaces".
      */
     public static String generateMaterialName(Material material){
         return WordUtils.capitalize(material.name().replace("_", " ").toLowerCase());
@@ -122,7 +122,7 @@ public class ShoppingUtil{
      * be deleted, otherwise it will just reduce the FrameCount of the shop by one. This method ensures, that no items will
      * drop from the frame, thus creating no opportunity for item-duplication.
      * Will save the shops.yml after deleting the frame.
-     * @param entity The ItemFrame to remove from it's world.
+     * @param entity The {@link ItemFrame} to remove from it's world.
      */
     public static void removeShopFrame(ItemFrame entity){
         FileConfiguration shops = ShopzPlugin.getShops();
@@ -161,8 +161,8 @@ public class ShoppingUtil{
     }
 
     /**
-     * Closes all ShoppingInventories of players currently opening a shop, for example on editing the shop or on removing
-     * the last ItemFrame.
+     * Closes all {@link ShoppingInventory} of players currently opening a shop, for example on editing the shop or on removing
+     * the last {@link ItemFrame}.
      */
     public static void closeAllVisitorInventories(Block attachedTo){
         List<Player> shopVisitors = new ArrayList<>();
@@ -182,10 +182,10 @@ public class ShoppingUtil{
     }
 
     /**
-     * Will check, whether the ItemStack @item will fit into Inventory @inventory. Will check for blank spaces, as well
-     * as already obtained stacks of the same Material and Lore as @item that are not fully stacked.
-     * @param inventory The Inventory to deposit @item in.
-     * @param item ItemStack to buy/sell and to deposit in @inventory.
+     * Will check, whether the {@link ItemStack} @item will fit into {@link Inventory} @inventory. Will check for blank
+     * spaces, as well as already obtained stacks of the same {@link Material} and lore as @item that are not fully stacked.
+     * @param inventory The {@link Inventory} to deposit @item in.
+     * @param item {@link ItemStack} to buy/sell and to deposit in @inventory.
      * @return true if there is enough space, false otherwise.
      */
     public static boolean hasInventorySpaceFor(Inventory inventory, ItemStack item){
@@ -204,13 +204,13 @@ public class ShoppingUtil{
     }
 
     /**
-     * Used to determine whether two ItemStacks are similar and thus stackable (if amounts and Material allow).
-     * Will check for Material,
-     * as well as ItemMeta, latter will ensure, that potions are not bought/sold unless being exactly the same (same effect,
+     * Used to determine whether two {@link ItemStack} are similar and thus stackable (if amounts and {@link Material} allow).
+     * Will check for {@link Material},
+     * as well as {@link ItemMeta}, latter will ensure, that potions are not bought/sold unless being exactly the same (same effect,
      * same length and same activation), armor- and weapons/tools are not bought/sold unless on full durability and enchanted
      * books are not bought/sold, unless their enchantments, as well as their level match.
-     * @param item1 First ItemStack to match @item2
-     * @param item2 Second ItemStack to match @item1
+     * @param item1 First {@link ItemStack} to match @item2
+     * @param item2 Second {@link ItemStack} to match @item1
      * @return true if both stacks are similar, false otherwise.
      */
     public static boolean areSimilar(ItemStack item1, ItemStack item2){
