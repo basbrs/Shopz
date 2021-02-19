@@ -20,7 +20,7 @@ usage:
         Use the command "/shopz admin" to generate an (one) AdminShopToken, it will be created in your inventory, should
         there be enough space
     setting up a shop:
-        crouch and place an Item Frame at any container (chests, doublechests, barrels, dispensers, hoppers, brewing stands,...
+        crouch and place any ShopToken at any container (chests, doublechests, barrels, dispensers, hoppers, brewing stands,...
         the setup inventory will open up for both, admin- and user shops
         click on the buttons on the left (structure void) to increase or decrease the price that Players can buy items at
         the store
