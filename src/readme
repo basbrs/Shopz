@@ -8,7 +8,7 @@ about:
     These can buy and sell Items without having actual stock for your Players.
 
 usage:
-    generating ShopTokens to setup User-Shops:
+    generating ShopTokens to setup user shops:
         Take a Stack of Item Frames (amount does not matter, higher amount will be more expensive)
         Place the Item Frames in an anvil
         Rename the Item Frames to whatever is specified in config.yml/frame_name ("$shop" per default)
@@ -19,7 +19,7 @@ usage:
     generating AdminShopTokens:
         Use the command "/shopz admin" to generate an (one) AdminShopToken, it will be created in your inventory, should
         there be enough space
-    setting up a Shop:
+    setting up a shop:
         crouch and place an Item Frame at any container (chests, doublechests, barrels, dispensers, hoppers, brewing stands,...
         the setup inventory will open up for both, admin- and user shops
         click on the buttons on the left (structure void) to increase or decrease the price that Players can buy items at
@@ -51,6 +51,9 @@ usage:
         shift-leftclick either of both to execute the same action 5-times
     closing a shop:
         leftclick (attack) the shop if you are it's owner, this will destroy it
+    further help:
+        use the "/shopz help" command to list every subcommand you are allowed to execute and get information about that
+        command
 
 permissions:
     shopz.trade     -   trade at shops of others (buy and sell)
@@ -60,3 +63,10 @@ permissions:
     shopz.setcost   -   use /shopz setCost [int] to change the cost of renaming an Item Frame
     shopz.setstep   -   use /shopz setStep [int] to change the step size of pricing in shops
     shopz.reload    -   use /shopz reload to reload config.yml and localization.yml from hard drive
+
+setting up the plugin:
+    Vault is required for this plugin to works as api for using your economy services
+    you can edit values in the config.yml to change parameters for usage (look above) and user-experience (currency and
+    chat_prefix)
+    feel free to change any value in the localization.yml, messages for your Players are specified here, some important
+    tags are annotated by @tag
