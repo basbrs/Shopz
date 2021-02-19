@@ -1,8 +1,62 @@
+ShopzPlugin by babrs
+
+about:
+    This plugin enables you to deploy dynamic User- and AdminServers for trading Stacks of up to 64 Items.
+    You are able to open shops with renamed Item Frames (just use an anvil and rename a stack of Item Frames to whatever
+    is specified in config.yml/frame_name ("$shop" per default).
+    AdminShops can be created by using the "/shopz admin" command and using the resulting Item Frame as previously explained.
+    These can buy and sell Items without having actual stock for your Players.
+
+usage:
+    generating ShopTokens to setup User-Shops:
+        Take a Stack of Item Frames (amount does not matter, higher amount will be more expensive)
+        Place the Item Frames in an anvil
+        Rename the Item Frames to whatever is specified in config.yml/frame_name ("$shop" per default)
+        Take the Item out of the result slot, this will not cost any experience
+        This may cost you some amount of currency, depending on the settings in config.yml/frame_cost_money multiplied by
+        the amount of Item Frames you just renamed
+        When you destroy a User-Shop, the attached ShopTokens will drop, making them reusable
+    generating AdminShopTokens:
+        Use the command "/shopz admin" to generate an (one) AdminShopToken, it will be created in your inventory, should
+        there be enough space
+    setting up a Shop:
+        crouch and place an Item Frame at any container (chests, doublechests, barrels, dispensers, hoppers, brewing stands,...
+        the setup inventory will open up for both, admin- and user shops
+        click on the buttons on the left (structure void) to increase or decrease the price that Players can buy items at
+        the store
+        click on the buttons on the left (barrier) to increase or decrease the price that Players can sell items at the
+        store
+        place any item (including potions, enchanted items, enchanted books,...) in the middlemost slot, this will display
+        that items material, it's amount and it's enchantments, but cleanse it's display name, this will be the item traded
+        at the shop
+        note: Players can only buy/sell the item, if it has the exact same enchantments and effects (for potions), armor
+        and weapons can only be traded, if their durability is full
+        for a user shop, the price at which you sell to players has to be greater than the price at which you (as owner)
+        buy from players, for an admin shop both can be equal, but the selling price cannot be greater than the buying
+        price
+        if you do not enter a selling price, the item can only be bought, but not sold by other players
+        close the setup-inventory, this will (if all inputs are valid) create an Item Frame with a copy of the item you're
+        planning to trade there
+        you can place multiple Item Frames at the same container, but this will only create duplicates of the first one,
+        thus you are only able to trade one item per block
+    reconfiguring the shop:
+        rightclick on a user- shop if you are it's owner, this will reopen the setup-menu, enabling you to tweak it's
+        settings
+        for admin shops you have to remove the Item Frame and place a new one (as admin shops do not drop AdminShopTokens)
+    trading:
+        rightclick an user- or admin shop's Item Frame
+        this will open up a shopping menu
+        leftclick the structure void item to buy a copy of the item in the middlemost slot for the buying price specified
+        leftclick the barrier item to buy a copy of the item in the middlemost slot for the buying price specified
+        shift-leftclick either of both to execute the same action 5-times
+    closing a shop:
+        leftclick (attack) the shop if you are it's owner, this will destroy it
+
 permissions:
-    shopz.trade     -   Erlaubnis an Shops ein- oder verkaufen zu dürfen
-    shopz.create    -   Erlaubnis Shops (keine Adminshops) mit ItemFrames erstellen zu dürfen und ItemFrames umnennen zu können
-    shopz.admin     -   Erlaubnis mit /shopz admin ItemFrames für Adminshops zu generieren und diese zu erstellen
-    shopz.clear     -   Erlaubnis mit /shopz clear oder durch Linksclick Shops zu löschen
-    shopz.setcost   -   Erlaubnis mit /shopz setcost [int] die Kosten für das Umbenennen eines ItemFrames zu setzen
-    shopz.setstep   -   Erlaubnis mit /shopz setstep [int] die Preisgranularität für Shops zu setzen
-    shopz.reload    -   Erlaubnix mit /shopz reload die Config- und Localization von der Platte neu zu laden
+    shopz.trade     -   trade at shops of others (buy and sell)
+    shopz.create    -   rename Item Frames and generate ShopTokens, setup shops
+    shopz.admin     -   generate AdminShopTokens, destroy admin shops
+    shopz.clear     -   destroy any shop with leftclick or the /shopz clear command
+    shopz.setcost   -   use /shopz setCost [int] to change the cost of renaming an Item Frame
+    shopz.setstep   -   use /shopz setStep [int] to change the step size of pricing in shops
+    shopz.reload    -   use /shopz reload to reload config.yml and localization.yml from hard drive
