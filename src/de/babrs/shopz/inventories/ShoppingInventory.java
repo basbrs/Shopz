@@ -162,9 +162,9 @@ public class ShoppingInventory{
             return true;
         }
 
-        if(!hasSufficientStock(from)){
+        if(!hasSufficientStock(from))
             return false;
-        }
+
         ItemStack items = getStack(0);
 
         for(ItemStack is : from.getContents()){
