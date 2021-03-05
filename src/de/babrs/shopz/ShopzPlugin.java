@@ -51,7 +51,11 @@ public class ShopzPlugin extends JavaPlugin{
     public void onEnable(){
         ShopzPlugin.description = super.getDescription();
 
-        loadEconomy();
+        if(!loadEconomy()){
+            logger.severe("Plugin disabled because vault-based economy could not be loaded.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
         loadConfig();
         loadLocalization();
         loadShops();
@@ -76,9 +80,13 @@ public class ShopzPlugin extends JavaPlugin{
      */
     @Override
     public void onDisable(){
-        closeInventories();
-        savePluginConfig();
-        saveShops();
+        try{
+            closeInventories();
+            savePluginConfig();
+            saveShops();
+        }catch(NullPointerException e){
+            //catch this exception when the plugin shuts down because of missing vault-dependencies
+        }
     }
 
     /**
@@ -111,9 +119,16 @@ public class ShopzPlugin extends JavaPlugin{
     /**
      * Load vault-economy using the RegisteredServiceProvider (https://dev.bukkit.org/projects/vault)
      */
-    private void loadEconomy(){
+    private boolean loadEconomy(){
+        if (getServer().getPluginManager().getPlugin("Vault") == null)
+            return false;
+
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        econ = rsp.getProvider();
+        if (rsp == null)
+            return false;
+        ShopzPlugin.econ = rsp.getProvider();
+
+        return econ != null;
     }
 
     /**
