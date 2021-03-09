@@ -240,6 +240,9 @@ public class ShoppingUtil{
         if(result && meta1 instanceof BannerMeta && meta2 instanceof BannerMeta)
             result = ((BannerMeta) meta1).getPatterns().equals(((BannerMeta) meta2).getPatterns());
 
+        if(result && meta1.hasLore() && meta2.hasLore())
+            result = meta1.getLore().equals(meta2.getLore());
+
         return result;
     }
 }

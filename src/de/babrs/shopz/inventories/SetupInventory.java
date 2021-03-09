@@ -1,7 +1,7 @@
 package de.babrs.shopz.inventories;
 
-import de.babrs.shopz.util.ShoppingUtil;
 import de.babrs.shopz.ShopzPlugin;
+import de.babrs.shopz.util.ShoppingUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,6 +23,7 @@ public class SetupInventory{
     private final ItemFrame frame;
     private final boolean isAdminShop;
     private boolean definedGood = false;
+    private boolean loreAdded = false;
     private int buyPrice = 0;
     private int sellPrice = 0;
 
@@ -122,6 +123,8 @@ public class SetupInventory{
 
                 ShopzPlugin.saveShops();
 
+                List<String> lore = good.getLore();
+                good.setLore(lore);
                 frame.setItem(good);
 
                 String pos = "(" + block.getX() + ", " + block.getY() + ", " + block.getZ() + ")";
@@ -174,13 +177,15 @@ public class SetupInventory{
             meta.setDisplayName(ChatColor.BOLD + "" + amt + "x " + goodName);
             toTrade.setItemMeta(meta);
 
+            loreAdded = false;
+            updateGoodLore(toTrade);
             getInventory().setItem(2, toTrade);
-            updateGoodMeta();
             definedGood = true;
         }
     }
 
     private void generateLore(boolean buy, ItemStack decrease, ItemStack increase){
+        loreAdded = true;
         FileConfiguration localization = ShopzPlugin.getLocalization();
 
         String currency = ShopzPlugin.getPluginConfig().getString("currency");
@@ -194,17 +199,24 @@ public class SetupInventory{
 
         ShoppingUtil.changeItemMeta(decrease, decrease.getItemMeta().getDisplayName(), lore);
         ShoppingUtil.changeItemMeta(increase, increase.getItemMeta().getDisplayName(), lore);
-        updateGoodMeta();
+
+        updateGoodLore(getInventory().getItem(2));
     }
 
-    private void updateGoodMeta(){
-        ItemStack good = inventory.getItem(2);
-        ItemMeta meta = good.getItemMeta();
-        List<String> lore = new ArrayList<>();
-        lore.add(inventory.getItem(0).getLore().get(0));
-        lore.add(inventory.getItem(3).getLore().get(0));
+    private void updateGoodLore(ItemStack toTrade){
+        ItemMeta meta = toTrade.getItemMeta();
+        List<String> lore = meta.hasLore() && meta.getLore() != null ? meta.getLore() : new ArrayList<>();
+        if(loreAdded){
+            int size = lore.size() - 1;
+            lore.set(size - 1, inventory.getItem(0).getLore().get(0));
+            lore.set(size, inventory.getItem(3).getLore().get(0));
+        }else{
+            lore.add(inventory.getItem(0).getLore().get(0));
+            lore.add(inventory.getItem(3).getLore().get(0));
+            loreAdded = true;
+        }
         meta.setLore(lore);
-        good.setItemMeta(meta);
+        toTrade.setItemMeta(meta);
     }
 
     @Override

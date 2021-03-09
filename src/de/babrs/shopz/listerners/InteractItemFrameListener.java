@@ -1,6 +1,6 @@
 package de.babrs.shopz.listerners;
 
-import de.babrs.shopz.*;
+import de.babrs.shopz.ShopzPlugin;
 import de.babrs.shopz.inventories.InventoriesSingleton;
 import de.babrs.shopz.inventories.SetupInventory;
 import de.babrs.shopz.inventories.ShoppingInventory;
@@ -21,7 +21,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 public class InteractItemFrameListener implements Listener{
 
@@ -83,7 +86,7 @@ public class InteractItemFrameListener implements Listener{
                             String owner = isAdminShop ? "" : Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).getName();
 
                             Inventory inv = Bukkit.createInventory(null, InventoryType.HOPPER, title.replace("@user", owner));
-                            ArrayList<String> lore = new ArrayList<>();
+                            List<String> lore = new ArrayList<>();
 
                             ItemStack buy = new ItemStack(Material.STRUCTURE_VOID);
                             ItemStack filler = new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
@@ -101,7 +104,8 @@ public class InteractItemFrameListener implements Listener{
                             buy.setItemMeta(buyMeta);
 
                             ItemMeta fillerMeta = filler.getItemMeta();
-                            if(isAdminShop) fillerMeta.setDisplayName(ChatColor.MAGIC + "O " + ChatColor.DARK_PURPLE + title + ChatColor.RESET + ChatColor.MAGIC + " O");
+                            if(isAdminShop)
+                                fillerMeta.setDisplayName(ChatColor.RESET + "" + ChatColor.MAGIC + "O " + ChatColor.DARK_PURPLE + title + ChatColor.RESET + ChatColor.MAGIC + " O");
                             else{
                                 lore.add(owner);
                                 fillerMeta.setDisplayName(title.replace("@user", ""));
@@ -110,7 +114,9 @@ public class InteractItemFrameListener implements Listener{
                             filler.setItemMeta(fillerMeta);
 
                             ItemMeta goodMeta = good.getItemMeta();
-                            lore.clear();
+                            lore = goodMeta.hasLore() && goodMeta.getLore() != null
+                                    ? goodMeta.getLore()
+                                    : new ArrayList<>();
                             lore.add(buyPriceText + ": " + buyPrice + currency); //Ankaufspreis: 40$
 
                             if(sellPrice > 0){

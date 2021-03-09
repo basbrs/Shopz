@@ -186,7 +186,6 @@ public class ShoppingInventory{
 
         ItemMeta meta = frameItem.getItemMeta();
         meta.setDisplayName(stack.getItemMeta().getDisplayName());
-        meta.setLore(stack.getItemMeta().getLore());
         stack.setItemMeta(meta);
         return stack;
     }
