@@ -169,6 +169,9 @@ error_not_your_shop: Dieser Shop gehört nicht dir, sondern @owner.
 # Fehlertext der dem Nutzer ausgegeben wird wenn er einen Adminshop zerstören/erweitern will
 error_not_your_shop_admin: Dieser Shop gehört nicht dir, sondern ist ein Adminshop.
 
+# Fehlertext, der angezeigt wird, wenn ein AdminShop an einem Shop errichtet werden soll, der dem Spieler persönlich gehört
+error_your_shop_no_admin: Du kannst hier keinen AdminShop erstellen, dieser Shop gehört dir bereits persönlich.
+
 # Fehlermeldung (rot und ohne Prefix), wenn der Spieler (oder Sender) ohne Permission agiert.
 no_permission: §cDir fehlen die nötigen Berechtigungen, um das durchzuführen.
 

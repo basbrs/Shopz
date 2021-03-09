@@ -1,10 +1,9 @@
 package de.babrs.shopz.listerners;
 
+import de.babrs.shopz.ShopzPlugin;
 import de.babrs.shopz.inventories.SetupInventory;
 import de.babrs.shopz.util.ShoppingUtil;
-import de.babrs.shopz.ShopzPlugin;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ItemFrame;
@@ -38,22 +37,22 @@ public class PlaceItemFrameListener implements Listener{
             else if(off.getType() == Material.ITEM_FRAME)
                 frame = off;
 
-            Boolean isAdminShop = null;
+            Boolean isAdminShopToken = null;
 
             if(frame != null && frame.getLore() != null && frame.getLore().size() > 0){
                 if(frame.getLore().get(0).equals(frameName))
-                    isAdminShop = false;
+                    isAdminShopToken = false;
                 else if(frame.getLore().get(0).equals(adminFrameName)){
                     if(!p.hasPermission("shopz.admin")){
                         p.getInventory().remove(frame);
                         event.setCancelled(true);
                         return;
                     }
-                    isAdminShop = true;
+                    isAdminShopToken = true;
                 }
             }
 
-            if(isAdminShop != null){
+            if(isAdminShopToken != null){
                 FileConfiguration shops = ShopzPlugin.getShops();
                 String coordinate = ShoppingUtil.blockToPath(event.getBlock());
 
@@ -63,12 +62,19 @@ public class PlaceItemFrameListener implements Listener{
                     String ownerUUID = shops.getString(coordinate + ".owner");
                     String prefix = ShopzPlugin.getPrefix();
 
-                    if(!ownerUUID.equals(p.getUniqueId().toString()) && !(isAdminShop && p.hasPermission("shopz.admin"))){
-                        if(isAdminShop)
+                    if(ownerUUID.equals("admin")){
+                        if(!p.hasPermission("shopz.admin") || !isAdminShopToken){
                             p.sendMessage(prefix + localization.getString("error_not_your_shop_admin"));
-                        else
-                            p.sendMessage(prefix + localization.getString("error_not_your_shop")
-                                    .replace("@owner", Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).getName()));
+                            event.setCancelled(true);
+                            return;
+                        }
+                    }else if(!ownerUUID.equals(p.getUniqueId().toString())){
+                        p.sendMessage(prefix + localization.getString("error_not_your_shop")
+                                .replace("@owner", Bukkit.getOfflinePlayer(UUID.fromString(ownerUUID)).getName()));
+                        event.setCancelled(true);
+                        return;
+                    }else if(isAdminShopToken){
+                        p.sendMessage(prefix + localization.getString("error_your_shop_no_admin"));
                         event.setCancelled(true);
                         return;
                     }
@@ -88,14 +94,14 @@ public class PlaceItemFrameListener implements Listener{
                             .replace("@pos", pos).replace("@amount", Integer.toString(frameCount + 1)));
                 }else{
                     if(p.hasPermission("shopz.create")){
-                        new SetupInventory(p, (ItemFrame) event.getEntity(), isAdminShop).openSetupDialogue();
+                        new SetupInventory(p, (ItemFrame) event.getEntity(), isAdminShopToken).openSetupDialogue();
 
-                        shops.set(coordinate + ".owner", isAdminShop ? "admin" : p.getUniqueId().toString());
+                        shops.set(coordinate + ".owner", isAdminShopToken ? "admin" : p.getUniqueId().toString());
                         ArrayList<String> frames = new ArrayList<>();
                         frames.add(event.getEntity().getUniqueId().toString());
                         shops.set(coordinate + ".frames", frames);
                         shops.set(coordinate + ".frame_count", 1);
-                        shops.set(coordinate + ".admin", isAdminShop);
+                        shops.set(coordinate + ".admin", isAdminShopToken);
                     }else{
                         p.sendMessage(ShopzPlugin.getLocalization().getString("no_permission"));
                         event.setCancelled(true);
