@@ -236,6 +236,10 @@ public class ShoppingUtil{
             result &= (owner1 == null && owner2 == null) ||
                     (owner1 != null && owner2 != null && owner1.getUniqueId().equals(owner2.getUniqueId()));
         }
+
+        if(result && meta1 instanceof BannerMeta && meta2 instanceof BannerMeta)
+            result = ((BannerMeta) meta1).getPatterns().equals(((BannerMeta) meta2).getPatterns());
+
         return result;
     }
 }
