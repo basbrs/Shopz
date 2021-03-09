@@ -11,6 +11,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 
 import java.util.List;
@@ -40,11 +41,19 @@ public class BreakItemFrameListener implements Listener{
     public void onBlockBreak(BlockBreakEvent event){
         String path = ShoppingUtil.blockToPath(event.getBlock());
         if(ShopzPlugin.getShops().get(path) != null && !event.isCancelled()){
-            List<String> frames = (List<String>) ShopzPlugin.getShops().get(path + ".frames");
-            for(String uuid : frames){
-                ItemFrame frame = (ItemFrame) Bukkit.getEntity(UUID.fromString(uuid));
-                HangingBreakEvent be = new HangingBreakEvent(frame, HangingBreakEvent.RemoveCause.DEFAULT);
-                Bukkit.getServer().getPluginManager().callEvent(be);
+            breakFramesAt(path);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void onExplosion(EntityExplodeEvent event){
+        if(!event.isCancelled()){
+            FileConfiguration shops = ShopzPlugin.getShops();
+            for(Block b : event.blockList()){
+                String path = ShoppingUtil.blockToPath(b);
+                if(shops.get(path) != null){
+                    breakFramesAt(path);
+                }
             }
         }
     }
@@ -54,15 +63,20 @@ public class BreakItemFrameListener implements Listener{
         for(Block b : event.getBlocks()){
             if(b.getType().name().contains("SHULKER_BOX")){
                 FileConfiguration shops = ShopzPlugin.getShops();
-                if(shops.get(ShoppingUtil.blockToPath(b)) != null){
-                    List<String> frames = (List<String>) shops.get(ShoppingUtil.blockToPath(b) + ".frames");
-                    for(String uuid : frames){
-                        ItemFrame frame = (ItemFrame) Bukkit.getEntity(UUID.fromString(uuid));
-                        HangingBreakEvent be = new HangingBreakEvent(frame, HangingBreakEvent.RemoveCause.DEFAULT);
-                        Bukkit.getServer().getPluginManager().callEvent(be);
-                    }
+                String path = ShoppingUtil.blockToPath(b);
+                if(shops.get(path) != null){
+                    breakFramesAt(path);
                 }
             }
+        }
+    }
+
+    private void breakFramesAt(String path){
+        List<String> frames = (List<String>) ShopzPlugin.getShops().get(path + ".frames");
+        for(String uuid : frames){
+            ItemFrame frame = (ItemFrame) Bukkit.getEntity(UUID.fromString(uuid));
+            HangingBreakEvent be = new HangingBreakEvent(frame, HangingBreakEvent.RemoveCause.DEFAULT);
+            Bukkit.getServer().getPluginManager().callEvent(be);
         }
     }
 }

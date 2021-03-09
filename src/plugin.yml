@@ -4,7 +4,7 @@ author: babrs
 main: de.babrs.shopz.ShopzPlugin
 description: Plugin handling the trading in shops, by babrs.
 api-version: 1.15
-depend: [ Vault ]
+depend: [Vault]
 commands:
   shopz:
     description: Use /shopz help <command> for further information.
