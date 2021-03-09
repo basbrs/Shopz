@@ -26,6 +26,7 @@ usage:
         the store
         click on the buttons on the left (barrier) to increase or decrease the price that Players can sell items at the
         store
+        shift-click any of the aforementioned buttons to increase or decrease the price in steps five times greater
         place any item (including potions, enchanted items, enchanted books,...) in the middlemost slot, this will display
         that items material, it's amount and it's enchantments, but cleanse it's display name, this will be the item traded
         at the shop

@@ -38,18 +38,23 @@ public class InventoryClickListener implements Listener{
             }else{
                 SetupInventory setup = InventoriesSingleton.getSetupFrom((Player) event.getWhoClicked());
                 if(setup != null && event.getRawSlot() < 5 && event.getRawSlot() >= 0){
-                    if(event.getClick() == ClickType.LEFT){
+                    if(event.getClick() == ClickType.LEFT || event.getClick() == ClickType.SHIFT_LEFT){
                         int slot = event.getRawSlot();
+                        int step = ShopzPlugin.getPluginConfig().getInt("price_step_size");
+
+                        if(event.getClick() == ClickType.SHIFT_LEFT)
+                            step *= 5;
+
                         if(slot == 0)
-                            setup.changeSellPrice(-ShopzPlugin.getPluginConfig().getInt("price_step_size"));
+                            setup.changeSellPrice(-step);
                         else if(slot == 1)
-                            setup.changeSellPrice(ShopzPlugin.getPluginConfig().getInt("price_step_size"));
+                            setup.changeSellPrice(step);
                         else if(slot == 2)
                             setup.changeGood(event.getWhoClicked().getItemOnCursor());
                         else if(slot == 3)
-                            setup.changeBuyPrice(-ShopzPlugin.getPluginConfig().getInt("price_step_size"));
+                            setup.changeBuyPrice(-step);
                         else if(slot == 4)
-                            setup.changeBuyPrice(ShopzPlugin.getPluginConfig().getInt("price_step_size"));
+                            setup.changeBuyPrice(step);
                     }
                     event.setCancelled(true);
                 }
