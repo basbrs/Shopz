@@ -6,6 +6,7 @@ import de.babrs.shopz.inventories.ShoppingInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.craftbukkit.libs.org.apache.commons.lang3.text.WordUtils;
@@ -14,10 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.*;
 
 import java.util.*;
 
@@ -223,13 +221,21 @@ public class ShoppingUtil{
 
         if(result && meta1 instanceof Damageable)
             result = !((Damageable) meta1).hasDamage() && !((Damageable) meta2).hasDamage();
+
         if(result && meta1 instanceof EnchantmentStorageMeta)
             result = meta2 instanceof EnchantmentStorageMeta
                     && ((EnchantmentStorageMeta) meta1).getStoredEnchants().equals(((EnchantmentStorageMeta) meta2).getStoredEnchants());
-        else if(result && meta1 instanceof PotionMeta)
+
+        if(result && meta1 instanceof PotionMeta)
             result = meta2 instanceof PotionMeta
                     && ((PotionMeta) meta1).getBasePotionData().equals(((PotionMeta) meta2).getBasePotionData());
 
+        if(result && meta1 instanceof SkullMeta && meta2 instanceof SkullMeta){
+            OfflinePlayer owner1 = ((SkullMeta) meta1).getOwningPlayer();
+            OfflinePlayer owner2 = ((SkullMeta) meta2).getOwningPlayer();
+            result &= (owner1 == null && owner2 == null) ||
+                    (owner1 != null && owner2 != null && owner1.getUniqueId().equals(owner2.getUniqueId()));
+        }
         return result;
     }
 }
