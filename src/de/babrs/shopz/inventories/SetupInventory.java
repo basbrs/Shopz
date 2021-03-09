@@ -124,6 +124,8 @@ public class SetupInventory{
                 ShopzPlugin.saveShops();
 
                 List<String> lore = good.getLore();
+                lore.remove(lore.size() - 1);
+                lore.remove(lore.size() - 1);
                 good.setLore(lore);
                 frame.setItem(good);
 
